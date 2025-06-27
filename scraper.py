@@ -2,7 +2,6 @@ from pymongo import MongoClient
 import requests
 from bs4 import BeautifulSoup
 import time , os
-import pandas as pd
 
 
 CRAWLBASE_TOKEN = os.getenv("CRAWLBASE_TOKEN")

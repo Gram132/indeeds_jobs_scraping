@@ -10,7 +10,6 @@ jobs:
     env:
       MONGODB_URI: ${{ secrets.MONGODB_URI }}
       CRAWLBASE_TOKEN: "-jTtVpJnJthUVbH18zTK0A"
-      COUNTRIES: "USA,Canada,Germany,Ireland,Singapore"
 
 
 

@@ -21,36 +21,38 @@ def get_indeed_jobs(query, country_domain, country ,pages):
         jobs_container = soup.find("div", id="mosaic-provider-jobcards")
         job_cards = jobs_container.find_all("li") if jobs_container else []
         print(f"Len cards {len(job_cards)}")
-        
+        erroIndex = 0
         for card in job_cards:
-            title_tag = card.find("h2")
-            id_tag = card.find("a").get("id").replace("job_", "") if title_tag else None
-            link_tag = title_tag.find("a") if title_tag else None
-
-            
-            company_tag =    card.find("span", attrs={"data-testid": "company-name"})
-            location_tag =   card.find("div",  attrs={"data-testid": "text-location"})
-            easy_apply = True if card.find("span", {"data-testid": "indeedApply"}) else False
-
+            try:
+                title_tag = card.find("h2")
+                id_tag = card.find("a").get("id").replace("job_", "") if title_tag else None
+                link_tag = title_tag.find("a") if title_tag else None
     
-            title = title_tag.text.strip() if title_tag else None
-            company = company_tag.text.strip() if company_tag else None
-            location = location_tag.text.strip() if location_tag else None
-            
-            
-            job_url = f"https://{country_domain}/viewjob?jk={id_tag}"
-
-
+                
+                company_tag =    card.find("span", attrs={"data-testid": "company-name"})
+                location_tag =   card.find("div",  attrs={"data-testid": "text-location"})
+                easy_apply = True if card.find("span", {"data-testid": "indeedApply"}) else False
     
-            if title:
-                results.append({
-                    "title": title,
-                    "company": company,
-                    "location": location ,
-                    "country": country.upper(),
-                    "job_url": job_url,
-                    "easy_apply": easy_apply
-                })
+        
+                title = title_tag.text.strip() if title_tag else None
+                company = company_tag.text.strip() if company_tag else None
+                location = location_tag.text.strip() if location_tag else None
+                
+                
+                job_url = f"https://{country_domain}/viewjob?jk={id_tag}"
+                if title:
+                    results.append({
+                        "title": title,
+                        "company": company,
+                        "location": location ,
+                        "country": country.upper(),
+                        "job_url": job_url,
+                        "easy_apply": easy_apply
+                        })
+            except:
+                print(f"error : {erroIndex}")
+                erroIndex =+1
+                pass            
     
     return results
     
@@ -97,7 +99,6 @@ keywords = [
     "remote voice data curator", "remote low-code developer", "content moderation"
 ]
 max_pages = 5
-output_file = "indeed_jobs_analyzed_(12-18).csv"
 
 # Indeed country-specific domains
 country_domains = {

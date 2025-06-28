@@ -90,4 +90,49 @@ countries_str = os.getenv("COUNTRIES", "")
 countries = countries_str.split(",") if countries_str else []
 
 
-print("Countries to scrape:", countries)
+#keywords = ["remote " + skill for skill in skills]
+keywords = [
+    "remote data analyst", "remote python developer", "remote junior data",
+    "remote associate developer", "remote data annotator", "remote data entry",
+    "remote data collection", "remote web scraping", "remote data cleaning",
+    "remote arabic data", "remote morocco data", "remote AI data trainer",
+    "remote prompt engineer", "remote sports data scientist", "remote web3 data analyst",
+    "remote voice data curator", "remote low-code developer", "content moderation"
+]
+max_pages = 5
+# Indeed country-specific domains
+country_domains = {
+  'USA': "www.indeed.com",
+  'Canada': "ca.indeed.com",
+  'Germany': "de.indeed.com",
+  'Ireland': "ie.indeed.com",
+  'Singapore': "sg.indeed.com",
+  'Bahrain': "bh.indeed.com",
+  'Denmark': "dk.indeed.com",
+  'Finland': "fi.indeed.com",
+  'Austria': "at.indeed.com",
+}
+
+# Scrape and analyze jobs
+all_jobs = []
+index = 0
+for country in countries:
+    for keyword in keywords:
+        country_domain = country_domains.get(country)
+        jobs = get_indeed_jobs(keyword , country_domain, country , max_pages)
+        all_jobs.extend(jobs)
+        time.sleep(2)
+    index = index +1
+    
+# remove duplicates
+unique_jobs_data = [dict(t) for t in {tuple(d.items()) for d in all_jobs}]
+
+
+
+print(len(unique_jobs_data))
+# Save to CSV
+if all_jobs:
+    save_to_mongodb(all_jobs)
+    print(f"Saved {len(all_jobs)} jobs t")
+else:
+    print("No jobs found.")

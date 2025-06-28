@@ -1,4 +1,4 @@
-name: Run Indeed Scraper
+name: Run Indeed Scraper 2
 
 on:
   workflow_dispatch:  # allows manual trigger

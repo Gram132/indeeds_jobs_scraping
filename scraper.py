@@ -86,7 +86,7 @@ def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_ur
 
 # Customize with your resume or preferences
 countries = [
-    "Greece", "Hong Kong", "Indonesia", "Kuwait","Luxembourg","Morocco"          
+    "Nigeria", "Norway", "Oman", "Peru", "Saudi Arabia", "Taiwan"       
 ]
 
 #keywords = ["remote " + skill for skill in skills]
@@ -118,7 +118,13 @@ country_domains = {
   "Indonesia": "id.indeed.com",
   "Kuwait": "kw.indeed.com",
   "Luxembourg": "lu.indeed.com",
-  "Morocco": "ma.indeed.com"
+  "Morocco": "ma.indeed.com",
+  "Nigeria": "ng.indeed.com",
+  "Norway": "no.indeed.com",
+  "Oman": "om.indeed.com",
+  "Peru": "pe.indeed.com",
+  "Saudi Arabia": "sa.indeed.com",
+  "Taiwan": "tw.indeed.com",
 }
 
 # Scrape and analyze jobs

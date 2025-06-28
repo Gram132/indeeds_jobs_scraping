@@ -78,8 +78,7 @@ def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_ur
                 doc["is_new"] = True
                 collection.insert_one(doc)
                 inserted_count += 1
-                   
-            print(f"Inserted {inserted_count} new documents.")
+                print(f"Inserted {inserted_count} new documents.")
 
     except Exception as e:
         print(f"Error saving to MongoDB: {e}")
@@ -88,12 +87,17 @@ def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_ur
 
 # Customize with your resume or preferences
 countries = [
-    "USA"                
+    "USA","Canada","Germany", "Ireland", "Singapore", "South Africa",                 
 ]
 
 #keywords = ["remote " + skill for skill in skills]
 keywords = [
-    "data analyst"
+    "remote data analyst", "remote python developer", "remote junior data",
+    "remote associate developer", "remote data annotator", "remote data entry",
+    "remote data collection", "remote web scraping", "remote data cleaning",
+    "remote arabic data", "remote morocco data", "remote AI data trainer",
+    "remote prompt engineer", "remote sports data scientist", "remote web3 data analyst",
+    "remote voice data curator", "remote low-code developer", "content moderation"
 ]
 max_pages = 5
 output_file = "indeed_jobs_analyzed_(12-18).csv"
@@ -101,6 +105,11 @@ output_file = "indeed_jobs_analyzed_(12-18).csv"
 # Indeed country-specific domains
 country_domains = {
   "USA": "www.indeed.com",
+  "Canada": "ca.indeed.com",
+  "Germany": "de.indeed.com",
+  "Ireland": "ie.indeed.com",
+  "Singapore": "sg.indeed.com",
+  "South Africa": "za.indeed.com",
 }
 
 # Scrape and analyze jobs

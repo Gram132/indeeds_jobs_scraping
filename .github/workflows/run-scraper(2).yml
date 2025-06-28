@@ -9,10 +9,9 @@ jobs:
 
     env:
       MONGODB_URI: ${{ secrets.MONGODB_URI }}
-      CRAWLBASE_TOKEN: "-jTtVpJnJthUVbH18zTK0A"
-      COUNTRIES: "USA,Canada,Germany,Ireland,Singapore"
-
-
+      CRAWLBASE_TOKEN: "MNXl9gA1yPnBnFQcA_FKPA"
+      COUNTRIES: "Bahrain,Denmark,Finland,Austria"
+      
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

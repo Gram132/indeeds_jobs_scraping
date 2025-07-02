@@ -89,8 +89,8 @@ countries = [
     #"USA","Canada","Germany", "Ireland", "Singapore", "South Africa",                 
     #"New Zealand", "Austria", "Bahrain", "China", "Denmark", "Finland"
     #"Greece", "Hong Kong", "Indonesia", "Kuwait","Luxembourg","Morocco"
-    "Nigeria", "Norway", "Oman", "Peru", "Saudi Arabia",                   
-    #"Turkey", "Ukraine", "Taiwan" ,    
+    #"Nigeria", "Norway", "Oman", "Peru", "Saudi Arabia",                   
+    "Turkey", "Ukraine", "Taiwan" ,    
 ]
 
 #keywords 0 = ["remote " + skill for skill in skills]

@@ -124,8 +124,7 @@ keywords_1 = [
     "Remote moderator",
     "Remote administrative assistant",
     "Remote chat support",
-    "Remote captioning",
-    "Remote call center jobs"
+    "Remote captioning"
 ]
 
 #keywords 2 = ["remote " + Junior Developer (Web, App, etc.)]

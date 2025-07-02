@@ -86,18 +86,37 @@ def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_ur
 
 # Customize with your resume or preferences
 countries = [
-    "Turkey", "Ukraine",      
+    "USA","Canada","Germany", "Ireland", "Singapore", "South Africa",                 
+    #"New Zealand", "Austria", "Bahrain", "China", "Denmark", "Finland"
+    #"Greece", "Hong Kong", "Indonesia", "Kuwait","Luxembourg","Morocco"
+    #"Nigeria", "Norway", "Oman", "Peru", "Saudi Arabia", "Taiwan"                   
+    #"Turkey", "Ukraine",      
 ]
 
 #keywords = ["remote " + skill for skill in skills]
 keywords = [
-    "remote data analyst", "remote python developer", "remote junior data",
-    "remote associate developer", "remote data annotator", "remote data entry",
-    "remote data collection", "remote web scraping", "remote data cleaning",
-    "remote arabic data", "remote morocco data", "remote AI data trainer",
-    "remote prompt engineer", "remote sports data scientist", "remote web3 data analyst",
-    "remote voice data curator", "remote low-code developer", "content moderation"
+    "Work from home",
+    "Remote part-time",
+    "Online jobs",
+    "Remote tasks",
+    "Freelance work",
+    "Online data entry",
+    "Remote typing jobs",
+    "Remote virtual assistant",
+    "Remote transcription",
+    "Remote microtasks",
+    "Part-time remote assistant",
+    "Online research jobs",
+    "Remote survey jobs",
+    "Freelance content writer",
+    "Remote customer support",
+    "Remote moderator",
+    "Remote administrative assistant",
+    "Remote chat support",
+    "Remote captioning",
+    "Remote call center jobs"
 ]
+
 max_pages = 5
 
 # Indeed country-specific domains

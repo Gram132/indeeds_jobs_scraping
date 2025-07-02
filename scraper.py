@@ -86,11 +86,11 @@ def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_ur
 
 # Customize with your resume or preferences
 countries = [
-    #"USA","Canada","Germany", "Ireland", "Singapore", "South Africa",                 
+    "USA","Canada","Germany", "Ireland", "Singapore",                 
     #"New Zealand", "Austria", "Bahrain", "China", "Denmark", "Finland"
     #"Greece", "Hong Kong", "Indonesia", "Kuwait","Luxembourg","Morocco"
     #"Nigeria", "Norway", "Oman", "Peru", "Saudi Arabia",                   
-    "Turkey", "Ukraine", "Taiwan" ,    
+    #"Turkey", "Ukraine", "Taiwan" ,    
 ]
 
 #keywords 0 = ["remote " + skill for skill in skills]
@@ -271,7 +271,7 @@ keywords_7 = [
 ]
 
 
-keywords = keywords_1
+keywords = keywords_2
 
 
 

@@ -87,8 +87,8 @@ def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_ur
 # Customize with your resume or preferences
 countries = [
     #"USA","Canada","Germany", "Ireland", "Singapore", "South Africa",                 
-    "New Zealand", "Austria", "Bahrain", "China", "Denmark", "Finland"
-    #"Greece", "Hong Kong", "Indonesia", "Kuwait","Luxembourg","Morocco"
+    #"New Zealand", "Austria", "Bahrain", "China", "Denmark", "Finland"
+    "Greece", "Hong Kong", "Indonesia", "Kuwait","Luxembourg","Morocco"
     #"Nigeria", "Norway", "Oman", "Peru", "Saudi Arabia", "Taiwan"                   
     #"Turkey", "Ukraine",      
 ]
@@ -126,6 +126,8 @@ keywords_1 = [
     "Remote chat support",
     "Remote captioning"
 ]
+
+
 
 #keywords 2 = ["remote " + Junior Developer (Web, App, etc.)]
 keywords_2= [
@@ -243,6 +245,29 @@ keywords_6 = [
     "Global talent visa jobs"
 ]
 
+#keywords 6 = ["remote " + Jobs Targeting Morocco / Maghreb Region]
+keywords_7 = [
+    "Jobs for Moroccans",
+    "Jobs for people from Morocco",
+    "We are hiring from Morocco",
+    "Remote jobs Morocco",
+    "Moroccan remote jobs",
+    "Hiring Moroccan freelancers",
+    "Freelance jobs Morocco",
+    "Open to Moroccan candidates",
+    "Looking for Moroccan workers",
+    "Jobs for North Africa",
+    "Remote jobs Maghreb",
+    "Maghrib remote work",
+    "Hiring from المغرب",
+    "Maroc jobs remote",
+    "Marocain freelance",
+    "We hire from Maghreb",
+    "Accepting applicants from Morocco",
+    "Open to North African applicants",
+    "Remote jobs for المغرب",
+    "International jobs for Moroccans"
+]
 
 
 keywords = keywords_1

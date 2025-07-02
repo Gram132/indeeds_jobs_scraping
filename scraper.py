@@ -88,9 +88,9 @@ def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_ur
 countries = [
     #"USA","Canada","Germany", "Ireland", "Singapore", "South Africa",                 
     #"New Zealand", "Austria", "Bahrain", "China", "Denmark", "Finland"
-    "Greece", "Hong Kong", "Indonesia", "Kuwait","Luxembourg","Morocco"
-    #"Nigeria", "Norway", "Oman", "Peru", "Saudi Arabia", "Taiwan"                   
-    #"Turkey", "Ukraine",      
+    #"Greece", "Hong Kong", "Indonesia", "Kuwait","Luxembourg","Morocco"
+    "Nigeria", "Norway", "Oman", "Peru", "Saudi Arabia",                   
+    #"Turkey", "Ukraine", "Taiwan" ,    
 ]
 
 #keywords 0 = ["remote " + skill for skill in skills]
@@ -124,7 +124,7 @@ keywords_1 = [
     "Remote moderator",
     "Remote administrative assistant",
     "Remote chat support",
-    "Remote captioning"
+    "Remote captioning",
 ]
 
 
@@ -266,7 +266,8 @@ keywords_7 = [
     "Accepting applicants from Morocco",
     "Open to North African applicants",
     "Remote jobs for المغرب",
-    "International jobs for Moroccans"
+    "International jobs for Moroccans",
+    "EMEA"
 ]
 
 

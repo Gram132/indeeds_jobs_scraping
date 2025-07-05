@@ -127,8 +127,6 @@ keywords_1 = [
     "Remote captioning",
 ]
 
-
-
 #keywords 2 = ["remote " + Junior Developer (Web, App, etc.)]
 keywords_2= [
     "Junior web developer",
@@ -152,7 +150,6 @@ keywords_2= [
     "Remote backend intern",
     "Entry level software developer"
 ]
-
 
 #keywords 3 = ["remote " + Junior / Entry-Level Data Analyst]
 keywords_3 = [

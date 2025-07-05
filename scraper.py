@@ -89,8 +89,8 @@ countries = [
     #"USA","Canada","Germany", "Ireland", "Singapore",                 
     #"New Zealand", "Austria", "Bahrain", "China", "Denmark", "Finland"
     #"Greece", "Hong Kong", "Indonesia", "Kuwait","Luxembourg","Morocco"
-    #"Nigeria", "Norway", "Oman", "Peru", 
-    "Saudi Arabia","Turkey", "Ukraine", "Taiwan" ,    
+    "Nigeria", "Norway", "Oman", "Peru", 
+    #"Saudi Arabia","Turkey", "Ukraine", "Taiwan" ,    
 ]
 
 #keywords 0 = ["remote " + skill for skill in skills]
@@ -247,27 +247,10 @@ keywords_6 = [
 
 #keywords 6 = ["remote " + Jobs Targeting Morocco / Maghreb Region]
 keywords_7 = [
-    "Jobs for Moroccans",
-    "Jobs for people from Morocco",
-    "We are hiring from Morocco",
-    "Remote jobs Morocco",
-    "Moroccan remote jobs",
-    "Hiring Moroccan freelancers",
-    "Freelance jobs Morocco",
-    "Open to Moroccan candidates",
-    "Looking for Moroccan workers",
-    "Jobs for North Africa",
-    "Remote jobs Maghreb",
-    "Maghrib remote work",
-    "Hiring from المغرب",
-    "Maroc jobs remote",
-    "Marocain freelance",
-    "We hire from Maghreb",
-    "Accepting applicants from Morocco",
-    "Open to North African applicants",
-    "Remote jobs for المغرب",
-    "International jobs for Moroccans",
-    "EMEA"
+    "Jobs for Moroccans", "Jobs for people from Morocco", "We are hiring from Morocco", "Remote jobs Morocco", "Moroccan remote jobs",
+    "Hiring Moroccan freelancers", "Freelance jobs Morocco", "Open to Moroccan candidates", "Looking for Moroccan workers","Jobs for North Africa", "Remote jobs Maghreb", "Maghrib remote work", "Hiring from المغرب", "Maroc jobs remote",
+    "Marocain freelance", "We hire from Maghreb", "Accepting applicants from Morocco", "Open to North African applicants",
+    "Remote jobs for المغرب", "International jobs for Moroccans", "EMEA"
 ]
 
 

@@ -88,7 +88,8 @@ def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_ur
 countries = [
     #"USA","Canada","Germany", "Ireland", "Singapore",                 
     #"New Zealand", "Austria", "Bahrain", "China", "Denmark", "Finland"
-    "Greece", "Hong Kong", "Indonesia", "Kuwait","Luxembourg","Morocco"
+    #"Greece", "Hong Kong", "Indonesia", 
+    "Kuwait","Luxembourg","Morocco"
     #"Nigeria", "Norway", "Oman", "Peru", 
     #"Saudi Arabia","Turkey", "Ukraine", "Taiwan" ,    
 ]

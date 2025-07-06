@@ -128,17 +128,164 @@ countries= [
 ]
 
 #keywords 0 = ["remote " + skill for skill in skills]
-keywords = [
+keywords_00 = [
     "Jobs for Moroccans", "Jobs for people from Morocco", "We are hiring from Morocco", "Remote jobs Morocco", "Moroccan remote jobs",
     "Hiring Moroccan freelancers", "Freelance jobs Morocco", "Open to Moroccan candidates", "Looking for Moroccan workers","Jobs for North Africa", "Remote jobs Maghreb", "Maghrib remote work", "Hiring from المغرب", "Maroc jobs remote",
     "Marocain freelance", "We hire from Maghreb", "Accepting applicants from Morocco", "Open to North African applicants",
-    "Remote jobs for المغرب", "International jobs for Moroccans", "EMEA"
+    "Remote jobs for المغرب", "International jobs for Moroccans", "EMEA" , 
+]
+keywords_01= [
+    "remote data analyst", "remote python developer", "remote junior data",
+    "remote associate developer", "remote data annotator", "remote data entry",
+    "remote data collection", "remote web scraping", "remote data cleaning",
+    "remote arabic data", "remote morocco data", "remote AI data trainer",
+    "remote prompt engineer", "remote sports data scientist", "remote web3 data analyst",
+    "remote voice data curator", "remote low-code developer", "content moderation"
+]
+
+#keywords 1 = ["remote " + Junior Developer (Web, App, etc.)]
+keywords_1 = [
+    "Work from home",
+    "Remote part-time",
+    "Online jobs",
+    "Remote tasks",
+    "Freelance work",
+    "Online data entry",
+    "Remote typing jobs",
+    "Remote virtual assistant",
+    "Remote transcription",
+    "Remote microtasks",
+    "Part-time remote assistant",
+    "Online research jobs",
+    "Remote survey jobs",
+    "Freelance content writer",
+    "Remote customer support",
+    "Remote moderator",
+    "Remote administrative assistant",
+    "Remote chat support",
+    "Remote captioning",
+]
+
+#keywords 2 = ["remote " + Junior Developer (Web, App, etc.)]
+keywords_2= [
+    "Junior web developer",
+    "Entry level web developer",
+    "Remote junior developer",
+    "Junior frontend developer",
+    "Junior backend developer",
+    "React developer intern",
+    "Remote Node.js developer",
+    "Junior full stack developer",
+    "Remote Django developer",
+    "Junior software engineer",
+    "Remote Flutter developer",
+    "Remote Python developer",
+    "Remote Laravel developer",
+    "Remote JavaScript developer",
+    "Remote WordPress developer",
+    "Junior mobile app developer",
+    "Remote developer internship",
+    "Junior dev remote",
+    "Remote backend intern",
+    "Entry level software developer"
+]
+
+#keywords 3 = ["remote " + Junior / Entry-Level Data Analyst]
+keywords_3 = [
+    "Junior data analyst",
+    "Entry level data analyst",
+    "Remote data analyst",
+    "Data analyst internship",
+    "Junior business analyst",
+    "Data entry analyst remote",
+    "Remote reporting analyst",
+    "Data analyst trainee",
+    "Remote BI analyst",
+    "SQL analyst remote",
+    "Remote Excel analyst",
+    "Entry data scientist",
+    "Remote statistics analyst",
+    "Junior data visualization",
+    "Remote Tableau analyst",
+    "Remote Power BI analyst",
+    "Remote ETL intern",
+    "Data operations remote",
+    "Remote analytics intern"
+]
+
+#keywords 4 = ["remote " + Other Remote Jobs You Can Likely Do]
+keywords_4 = [
+    "Remote data entry",
+    "Remote research assistant",
+    "Remote QA tester",
+    "Remote software tester intern",
+    "Remote technical support",
+    "Remote web researcher",
+    "Remote customer service",
+    "Remote assistant",
+    "Remote content moderator",
+    "Remote social media assistant",
+    "Remote online tutor",
+    "Remote transcriptionist",
+    "Remote content creator",
+    "Remote email handler",
+    "Remote operations assistant",
+    "Remote product tester",
+    "Remote CRM support",
+    "Remote intern",
+    "Remote virtual assistant"
+]
+
+
+#keywords 5 = ["remote " + Remote Jobs Anywhere in the World]
+keywords_5 = [
+    "Remote internship",
+    "Remote jobs worldwide",
+    "Work from anywhere",
+    "Remote job anywhere",
+    "Remote freelance job",
+    "Remote junior job",
+    "Global remote job",
+    "Remote contract job",
+    "Remote international job",
+    "Worldwide data entry",
+    "Anywhere job internship",
+    "Remote developer worldwide",
+    "Remote analyst anywhere",
+    "Online job international",
+    "Remote tech support global",
+    "Remote admin job international"
+]
+
+#keywords 6 = ["remote " + Jobs That Provide Sponsorship]
+keywords_6 = [
+    "Visa sponsorship",
+    "Jobs with visa sponsorship",
+    "H1B sponsorship",
+    "Skilled worker visa",
+    "Sponsorship jobs abroad",
+    "Sponsorship jobs Europe",
+    "Junior jobs with sponsorship",
+    "Remote jobs with visa sponsorship",
+    "Work permit jobs",
+    "Tier 2 sponsorship",
+    "Tech jobs with visa support",
+    "Relocation and visa support",
+    "Internship with sponsorship",
+    "International relocation jobs",
+    "Jobs hiring foreign workers",
+    "Jobs open to international candidates",
+    "Sponsorship jobs remote",
+    "Remote jobs for foreigners",
+    "Hiring international talent",
+    "Global talent visa jobs"
 ]
 
 
 
 
 
+keywords = keywords_01
 max_pages = 5
 
 # Indeed country-specific domains

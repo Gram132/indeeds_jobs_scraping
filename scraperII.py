@@ -9,11 +9,11 @@ CRAWLBASE_TOKEN = os.getenv("CRAWLBASE_TOKEN")
 mongo_uri = os.getenv("MONGODB_URI")
 
 
-proxy_list = [
+proxies = [
     "113.160.132.195:8080",
     "51.81.245.3:17981"
 ]
-def get_indeed_jobs(query, country_domain, country, pages, CRAWLBASE_TOKEN, proxy_list):
+def get_indeed_jobs(query, country_domain, country, pages, proxy_list):
     query = query.replace(" ", "+")
     results = []
 
@@ -190,7 +190,7 @@ index = 0
 for country in countries:
     for keyword in keywords:
         country_domain = country_domains.get(country)
-        jobs = get_indeed_jobs(keyword , country_domain, country , max_pages)
+        jobs = get_indeed_jobs(keyword , country_domain, country , max_pages, proxies)
         all_jobs.extend(jobs)
         time.sleep(2)
     index = index +1

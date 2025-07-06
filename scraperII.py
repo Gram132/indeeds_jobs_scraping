@@ -123,8 +123,8 @@ def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_ur
 
 # Customize with your resume or preferences
 countries= [
-    "Netherlands", 
-    #"Ireland", "Portugal", "Sweden", "Czech Republic", "Poland", "Italy", "Belgium", "Spain", "Switzerland", "Gibraltar"
+    #"Netherlands", 
+    "Portugal", "Sweden", "Czech Republic", "Poland", "Italy", "Belgium", "Spain", "Switzerland", "Gibraltar"
 ]
 
 #keywords 0 = ["remote " + skill for skill in skills]
@@ -285,7 +285,7 @@ keywords_6 = [
 
 
 
-keywords = keywords_01
+keywords = keywords_00
 max_pages = 5
 
 # Indeed country-specific domains

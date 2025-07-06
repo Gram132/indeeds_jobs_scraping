@@ -109,7 +109,6 @@ country_domains = {
   "USA": "www.indeed.com",
   "Canada": "ca.indeed.com",
   "Germany": "de.indeed.com",
-  "Ireland": "ie.indeed.com",
   "Singapore": "sg.indeed.com",
   "New Zealand": "nz.indeed.com",
   "Austria": "at.indeed.com",
@@ -131,6 +130,21 @@ country_domains = {
   "Taiwan": "tw.indeed.com",
   "Turkey": "tr.indeed.com",
   "Ukraine": "ua.indeed.com",
+  "Netherlands": "nl.indeed.com",
+  "Ireland": "ie.indeed.com",
+  "Portugal": "pt.indeed.com",
+  "France": "fr.indeed.com",
+  "Sweden": "se.indeed.com",
+  "Estonia": "ee.indeed.com",
+  "Czech Republic": "cz.indeed.com",
+  "Poland": "pl.indeed.com",
+  "Lithuania": "lt.indeed.com",
+  "Italy": "it.indeed.com",
+  "Belgium": "be.indeed.com",
+  "Spain": "es.indeed.com",
+  "Switzerland": "ch.indeed.com",
+  "Gibraltar": "uk.indeed.com"  
+
 }
 
 # Scrape and analyze jobs

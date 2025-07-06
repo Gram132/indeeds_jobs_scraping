@@ -9,8 +9,7 @@ jobs:
 
     env:
       MONGODB_URI: ${{ secrets.MONGODB_URI }}
-      CRAWLBASE_TOKEN: "MNXl9gA1yPnBnFQcA_FKPA"
-      COUNTRIES: "Bahrain,Denmark,Finland,Austria"
+      CRAWLBASE_TOKEN: "teQC3WgCIMcORBKfUzLTtQ"
       
     steps:
       - name: Checkout code
@@ -27,4 +26,4 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run scraper
-        run: python scraper.py
+        run: python scraperII.py

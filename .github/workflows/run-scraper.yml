@@ -9,7 +9,7 @@ jobs:
 
     env:
       MONGODB_URI: ${{ secrets.MONGODB_URI }}
-      CRAWLBASE_TOKEN: "UfvC1DBUH454Cd2d5xSimg"
+      CRAWLBASE_TOKEN: "teQC3WgCIMcORBKfUzLTtQ"
 
 
 

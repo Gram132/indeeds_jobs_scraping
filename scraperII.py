@@ -2,60 +2,97 @@ from pymongo import MongoClient
 import requests
 from bs4 import BeautifulSoup
 import time , os
-
+import random
+import time
 
 CRAWLBASE_TOKEN = os.getenv("CRAWLBASE_TOKEN")
 mongo_uri = os.getenv("MONGODB_URI")
 
-def get_indeed_jobs(query, country_domain, country ,pages):
+
+proxy_list = [
+    "113.160.132.195:8080",
+    "51.81.245.3:17981"
+]
+def get_indeed_jobs(query, country_domain, country, pages, CRAWLBASE_TOKEN, proxy_list):
     query = query.replace(" ", "+")
     results = []
-    for page in range(0,pages):
+
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        )
+    }
+
+    for page in range(pages):
         url = f"https://{country_domain}/jobs?q={query}&start={page * 10}"
-        print(url)
-        response = requests.get(
-                    f"https://api.crawlbase.com/?token={CRAWLBASE_TOKEN}&url={url}"
-                )
-        soup = BeautifulSoup(response.text, "html.parser")
-    
-        jobs_container = soup.find("div", id="mosaic-provider-jobcards")
-        job_cards = jobs_container.find_all("li") if jobs_container else []
-        print(f"Len cards {len(job_cards)}")
-        erroIndex = 0
-        for card in job_cards:
+        print(f"\n🔎 Fetching: {url}")
+
+        success = False
+        retries = 0
+
+        while not success and retries < 5:
+            proxy = random.choice(proxy_list)
+            proxies = {
+                "http": f"http://{proxy}",
+                "https": f"http://{proxy}"
+            }
+
             try:
-                title_tag = card.find("h2")
-                id_tag = card.find("a").get("id").replace("job_", "") if title_tag else None
-                link_tag = title_tag.find("a") if title_tag else None
-    
-                
-                company_tag =    card.find("span", attrs={"data-testid": "company-name"})
-                location_tag =   card.find("div",  attrs={"data-testid": "text-location"})
-                easy_apply = True if card.find("span", {"data-testid": "indeedApply"}) else False
-    
-        
-                title = title_tag.text.strip() if title_tag else None
-                company = company_tag.text.strip() if company_tag else None
-                location = location_tag.text.strip() if location_tag else None
-                
-                
-                job_url = f"https://{country_domain}/viewjob?jk={id_tag}"
-                if title:
-                    results.append({
-                        "title": title,
-                        "company": company,
-                        "location": location ,
-                        "country": country.upper(),
-                        "job_url": job_url,
-                        "easy_apply": easy_apply
-                        })
-            except:
-                print(f"error : {erroIndex}")
-                erroIndex =+1
-                pass            
-    
+                response = requests.get(
+                    f"https://api.crawlbase.com/?token={CRAWLBASE_TOKEN}&url={url}",
+                    headers=headers,
+                    proxies=proxies,
+                    timeout=15
+                )
+
+                if response.status_code == 200:
+                    success = True
+                    soup = BeautifulSoup(response.text, "html.parser")
+                    jobs_container = soup.find("div", id="mosaic-provider-jobcards")
+                    job_cards = jobs_container.find_all("li") if jobs_container else []
+
+                    print(f"✅ Found {len(job_cards)} job cards")
+
+                    for card in job_cards:
+                        try:
+                            title_tag = card.find("h2")
+                            link_tag = title_tag.find("a") if title_tag else None
+                            id_tag = link_tag.get("id").replace("job_", "") if link_tag else None
+
+                            company_tag = card.find("span", attrs={"data-testid": "company-name"})
+                            location_tag = card.find("div", attrs={"data-testid": "text-location"})
+                            easy_apply = bool(card.find("span", {"data-testid": "indeedApply"}))
+
+                            title = title_tag.text.strip() if title_tag else None
+                            company = company_tag.text.strip() if company_tag else None
+                            location = location_tag.text.strip() if location_tag else None
+                            job_url = f"https://{country_domain}/viewjob?jk={id_tag}" if id_tag else None
+
+                            if title and job_url:
+                                results.append({
+                                    "title": title,
+                                    "company": company,
+                                    "location": location,
+                                    "country": country.upper(),
+                                    "job_url": job_url,
+                                    "easy_apply": easy_apply
+                                })
+                        except Exception as e:
+                            print(f"⚠️ Parse error: {e}")
+                    break
+                else:
+                    print(f"❌ Status code {response.status_code} from Crawlbase.")
+                    retries += 1
+                    time.sleep(random.uniform(2, 5))
+            except Exception as e:
+                print(f"⚠️ Proxy failed ({proxy}): {e}")
+                retries += 1
+                time.sleep(random.uniform(2, 5))
+
     return results
-    
+
+
 def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_urls", uri=mongo_uri):
     try:
         # Connect to MongoDB
@@ -86,8 +123,8 @@ def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_ur
 
 # Customize with your resume or preferences
 countries= [
-    "Netherlands", "Ireland", "Portugal", "Sweden", "Czech Republic",
-    "Poland", "Italy", "Belgium", "Spain", "Switzerland", "Gibraltar"
+    "Netherlands", 
+    #"Ireland", "Portugal", "Sweden", "Czech Republic", "Poland", "Italy", "Belgium", "Spain", "Switzerland", "Gibraltar"
 ]
 
 #keywords 0 = ["remote " + skill for skill in skills]

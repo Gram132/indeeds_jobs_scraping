@@ -9,7 +9,7 @@ serper_key_cycle = cycle(SERPER_API_KEYS)
 mongo_uri = os.getenv("MONGODB_URI")
 
 
-def get_jobs_for_query_country(query, country_domain, country_code, country ,continent , pages=3, new=True):
+def get_jobs_for_query_country(query, country_domain, country_code, country ,continent , pages=4, new=True):
     all_jobs = []
     for page in range(pages):
         # Build search query
@@ -178,7 +178,7 @@ if __name__ == "__main__":
         "remote voice data curator", "remote low-code developer", "content moderation"
     ]
     
-    keywords = keywords_0
+    keywords = keywords_1
    
     country_data = {
         "us": {"country": "United States", "domain": "indeed.com", "keywords": keywords, "continent": "North America"},
@@ -238,7 +238,7 @@ if __name__ == "__main__":
         for keyword in keywords:
             print(f"\n🔎 Searching '{keyword}' in {country_code.upper()}")
             jobs = get_jobs_for_query_country(
-                keyword, domain, country_code, country ,continent , pages=3, new=True
+                keyword, domain, country_code, country ,continent , pages=4, new=True
             )
             all_results.extend(jobs)
         

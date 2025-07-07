@@ -226,9 +226,10 @@ if __name__ == "__main__":
 
 
 
-    all_results = []
+    
 
     for country_code, data in country_data.items():
+        all_results = []
         domain = data["domain"]
         keywords = data["keywords"]
         country = data["country"]
@@ -241,6 +242,6 @@ if __name__ == "__main__":
             )
             all_results.extend(jobs)
         
-    print(f"\n🎯 Total jobs scraped: {len(all_results)}")
-    save_to_mongodb(all_results)
+        print(f"\n🎯 Total jobs scraped in : {country_code} is {len(all_results)}")
+        save_to_mongodb(all_results)
 

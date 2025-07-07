@@ -5,13 +5,12 @@ from itertools import cycle
 import os 
 
 SERPER_API_KEYS = os.getenv("SERPER_API_KEYS", "").split(",")
-serper_key_cycle = cycle(SERPER_API_KEYS)
+serper_key_cycle = cycle(SERPER_API_KEYS) 
 mongo_uri = os.getenv("MONGODB_URI")
 
 
 def get_jobs_for_query_country(query, country_domain, country_code, pages=2, new=True):
     all_jobs = []
-
     for page in range(pages):
         # Build search query
         freshness = "after:2025-01-01" if new else ""

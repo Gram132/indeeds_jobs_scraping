@@ -8,8 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      SERPER_API_KEYS: ${{ secrets.SERPER_API_KEYS }}
       MONGODB_URI: ${{ secrets.MONGODB_URI }}
-      CRAWLBASE_TOKEN: "lFFr9IpgPBgUmWp79AvIIA"
+
 
 
 

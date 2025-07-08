@@ -9,10 +9,9 @@ serper_key_cycle = cycle(SERPER_API_KEYS)
 mongo_uri = os.getenv("MONGODB_URI")
 
 
-def get_jobs_for_query_country(query, country_domain, country_code, country ,continent , pages=4, new=True):
+def get_jobs_for_query_country(query, country_domain, country_code, country, continent, pages=4, new=True):
     all_jobs = []
     for page in range(pages):
-        # Build search query
         freshness = "after:2025-01-01" if new else ""
         search_query = f"site:{country_domain}/jobs {query} {freshness}".strip()
 
@@ -43,7 +42,7 @@ def get_jobs_for_query_country(query, country_domain, country_code, country ,con
                 if response.status_code == 200:
                     data = response.json()
                     organic = data.get("organic", [])
-                    break  # Exit retry loop
+                    break
                 else:
                     print(f"❌ Key #{attempt+1} failed (Status: {response.status_code})")
                     attempt += 1
@@ -58,7 +57,6 @@ def get_jobs_for_query_country(query, country_domain, country_code, country ,con
             print(f"❌ All API keys failed for '{query}' in {country_code.upper()}")
             return []
 
-        # Parse results
         if not organic:
             print(f"❌ No results on page {page + 1} for '{query}' in {country_code}")
             continue
@@ -69,18 +67,19 @@ def get_jobs_for_query_country(query, country_domain, country_code, country ,con
             link = result.get("link", "").strip()
             title = result.get("title", "").strip()
 
-            if f"{country_domain}/jobs" in link:
+            # ✅ Only accept actual job detail pages
+            if (f"{country_domain}/" in link) and any(x in link for x in ["vjk=", "jk=", "jtid=", "/viewjob"]):
                 all_jobs.append({
                     "title": title,
                     "job_url": link,
-                    "country": country,  # Optional: add scraping if needed
+                    "country": country,
                     "is_new": new,
                     "country_code": country_code.upper(),
-                    "continent" : continent  ,
+                    "continent": continent,
                 })
                 print(f"→ {title} | {link}")
 
-        time.sleep(1)  # Respect rate limits
+        time.sleep(1)
 
     return all_jobs
 

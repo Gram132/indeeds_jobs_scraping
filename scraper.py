@@ -68,7 +68,7 @@ def get_jobs_for_query_country(query, country_domain, country_code, country, con
             title = result.get("title", "").strip()
 
             # ✅ Only accept actual job detail pages
-            if (f"{country_domain}/" in link) and any(x in link for x in ["vjk=", "jk=", "jtid=", "/viewjob"]):
+            if any(p in link for p in ["/viewjob?jk=", "/rc/clk?jk="]) and country_domain in link:
                 all_jobs.append({
                     "title": title,
                     "job_url": link,
@@ -84,7 +84,7 @@ def get_jobs_for_query_country(query, country_domain, country_code, country, con
     return all_jobs
 
 
-def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_data", uri=mongo_uri):
+def save_to_mongodb(data, db_name="Indeed_jobs_urls", collection_name="Indeed_database", uri=mongo_uri):
     try:
         # Connect to MongoDB
         client = MongoClient(uri)

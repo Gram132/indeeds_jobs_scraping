@@ -124,11 +124,12 @@ if __name__ == "__main__":
     
     #keywords 1 = ["remote " + Junior Developer (Web, App, etc.)]
     keywords_1 = [
-        "Work from home", "Remote part-time", "Online jobs", "Remote tasks", "Freelance work", "Online data entry",
-        "Remote typing jobs", "Remote virtual assistant", "Remote transcription", "Remote microtasks", 
-        "Part-time remote assistant", "Online research jobs", "Remote survey jobs",
-        "Freelance content writer", "Remote customer support", "Remote moderator", 
-        "Remote administrative assistant", "Remote chat support", "Remote captioning",
+        "Work from home", 
+        #"Remote part-time", "Online jobs", "Remote tasks", "Freelance work", "Online data entry",
+        #"Remote typing jobs", "Remote virtual assistant", "Remote transcription", "Remote microtasks", 
+        #"Part-time remote assistant", "Online research jobs", "Remote survey jobs",
+        #"Freelance content writer", "Remote customer support", "Remote moderator", 
+        #"Remote administrative assistant", "Remote chat support", "Remote captioning",
     ]
     
     #keywords 2 = ["remote " + Junior Developer (Web, App, etc.)]

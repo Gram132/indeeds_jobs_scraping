@@ -110,11 +110,22 @@ def download_kick_video(video_url, save_path):
 
 
 if __name__ == "__main__":
-    video_url = "https://kick.com/chaos333gg/videos/dc314056-2096-49f4-a249-16e0cba3e9bd"
-    save_path = os.path.abspath("./videos/kick_video.mp4")
-
-    success = download_kick_video(video_url, save_path)
-    if not success:
-        print("❌ Download failed.")
-    else:
-        print("✅ All done.")
+    list_of_clips = [
+        {
+        'URL':'https://kick.com/chaos333gg/clips/clip_01JZDJQS6MKYX9GS3XQAJK33RQ',
+        'name':'video_001'
+        },
+        {
+        'URL':'https://kick.com/chaos333gg/clips/clip_01JZ9DD9C8FBA3PXT1JJQ6WDC9',
+        'name':'video_002'}, 
+        ]
+    
+    for i in list_of_clips :
+        kick_url = i['URL']
+        save_path = f"./videos/{i['name']}.mp4"
+        cookies_file = "cookies.txt"  # Optional: Path to cookies.txt
+        success = download_kick_video(kick_url, save_path)
+        if not success:
+            print("❌ Download failed.")
+        else:
+            print("✅ All done.")

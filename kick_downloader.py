@@ -12,39 +12,6 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-def load_cookies(driver, cookies_file):
-    if not os.path.exists(cookies_file):
-        print("No cookies.txt found — skipping cookie load.")
-        return False
-
-    try:
-        with open(cookies_file, 'r') as f:
-            cookies = []
-            for line in f:
-                if line.strip() and not line.startswith('#'):
-                    parts = line.strip().split('\t')
-                    if len(parts) >= 7:
-                        cookies.append({
-                            'name': parts[5],
-                            'value': parts[6],
-                            'domain': parts[0],
-                            'path': parts[2],
-                            'secure': parts[3].lower() == 'true',
-                            'expires': int(parts[4]) if parts[4].isdigit() else None
-                        })
-        driver.get('https://kick.com')
-        for cookie in cookies:
-            try:
-                driver.add_cookie(cookie)
-            except Exception as e:
-                logging.warning(f"Failed to add cookie {cookie['name']}: {e}")
-        print("✅ Cookies loaded.")
-        driver.refresh()
-        return True
-    except Exception as e:
-        logging.error(f"Cookie load error: {e}")
-        return False
-
 def download_with_ffmpeg(m3u8_url, save_path):
     try:
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
@@ -65,6 +32,9 @@ def download_with_ffmpeg(m3u8_url, save_path):
         if process.returncode == 0:
             print("✅ Download complete!")
             logging.info(f"Video downloaded: {save_path}")
+            if os.path.exists(save_path):
+                print(f"✅ File exists at: {save_path}")
+                print(f"📦 Size: {os.path.getsize(save_path)} bytes")
             return True
         else:
             print("❌ FFmpeg failed.")
@@ -80,7 +50,7 @@ def find_m3u8_in_source(page_source):
     matches = re.findall(pattern, page_source)
     return matches[0] if matches else None
 
-def download_kick_video(video_url, save_path, cookies_file=None):
+def download_kick_video(video_url, save_path):
     print(f"🚀 Starting download for: {video_url}")
     logging.info(f"Starting for: {video_url}")
     driver = None
@@ -94,9 +64,6 @@ def download_kick_video(video_url, save_path, cookies_file=None):
         options.add_argument('--user-agent=Mozilla/5.0')
 
         driver = uc.Chrome(options=options)
-
-        if cookies_file:
-            load_cookies(driver, cookies_file)
 
         print("🌐 Navigating to the video page...")
         driver.get(video_url)
@@ -126,12 +93,10 @@ def download_kick_video(video_url, save_path, cookies_file=None):
                 logging.warning(f"Driver quit error: {e}")
 
 if __name__ == "__main__":
-    # You can change these to be dynamic later
     video_url = "https://kick.com/chaos333gg/clips/clip_01J97PAS46AE7DZD6HZSJATE66"
-    save_path = "./videos/kick_video.mp4"
-    cookies_file = "cookies.txt"
+    save_path = os.path.abspath("./videos/kick_video.mp4")
 
-    success = download_kick_video(video_url, save_path, cookies_file)
+    success = download_kick_video(video_url, save_path)
     if not success:
         print("❌ Download failed.")
     else:

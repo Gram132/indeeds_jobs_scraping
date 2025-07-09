@@ -1,20 +1,33 @@
 name: Download Kick Video
 
 on:
-  workflow_dispatch:  # Run manually from GitHub Actions tab
+  workflow_dispatch:  # Allows you to run manually
 
 jobs:
   download:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
-      - name: Build and run Docker container
+      - name: Create videos directory
+        run: mkdir -p videos
+
+      - name: Build Docker image
+        run: docker build -t kick-video-downloader .
+
+      - name: Run Docker container to download video
         run: |
-          docker build -t kick-video-downloader .
-          docker run --rm kick-video-downloader
+          docker run --rm \
+            -v ${{ github.workspace }}/videos:/app/videos \
+            kick-video-downloader
+
+      - name: Upload video as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kick-video
+          path: videos/

@@ -14,10 +14,8 @@ logging.basicConfig(
 
 def download_with_ffmpeg(m3u8_url, save_path, fallback_partial=False):
     os.makedirs(os.path.dirname(save_path), exist_ok=True)
-
     print(f"📥 Downloading video with FFmpeg to {save_path} ...")
 
-    # Main command (re-encoding, better for long videos)
     cmd = [
         'ffmpeg',
         '-y',
@@ -34,11 +32,10 @@ def download_with_ffmpeg(m3u8_url, save_path, fallback_partial=False):
 
     if fallback_partial:
         cmd.insert(cmd.index('-i'), '-t')
-        cmd.insert(cmd.index('-t') + 1, '600')  # 10 minutes
+        cmd.insert(cmd.index('-t') + 1, '600')  # first 10 minutes
 
     try:
         process = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-
         if process.returncode == 0:
             print("✅ Download complete!")
             if os.path.exists(save_path):
@@ -63,7 +60,7 @@ def find_m3u8_in_source(page_source):
 
 
 def download_kick_video(video_url, save_path):
-    print(f"🚀 Starting download for: {video_url}")
+    print(f"\n🚀 Starting download for: {video_url}")
     logging.info(f"Starting for: {video_url}")
     driver = None
 
@@ -112,18 +109,18 @@ def download_kick_video(video_url, save_path):
 if __name__ == "__main__":
     list_of_clips = [
         {
-        'URL':'https://kick.com/chaos333gg/clips/clip_01JZDJQS6MKYX9GS3XQAJK33RQ',
-        'name':'video_001'
+            'URL': 'https://kick.com/chaos333gg/clips/clip_01JZDJQS6MKYX9GS3XQAJK33RQ',
+            'name': 'video_001'
         },
         {
-        'URL':'https://kick.com/chaos333gg/clips/clip_01JZ9DD9C8FBA3PXT1JJQ6WDC9',
-        'name':'video_002'}, 
-        ]
-    
-    for i in list_of_clips :
-        kick_url = i['URL']
-        save_path = f"./videos/{i['name']}.mp4"
-        cookies_file = "cookies.txt"  # Optional: Path to cookies.txt
+            'URL': 'https://kick.com/chaos333gg/clips/clip_01JZ9DD9C8FBA3PXT1JJQ6WDC9',
+            'name': 'video_002'
+        },
+    ]
+
+    for clip in list_of_clips:
+        kick_url = clip['URL']
+        save_path = f"./videos/{clip['name']}.mp4"
         success = download_kick_video(kick_url, save_path)
         if not success:
             print("❌ Download failed.")

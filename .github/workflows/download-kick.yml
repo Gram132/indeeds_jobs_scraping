@@ -9,6 +9,7 @@ permissions:
 jobs:
   download:
     runs-on: ubuntu-latest
+    timeout-minutes: 360  # Max 6 hours
 
     steps:
       - name: Checkout repo

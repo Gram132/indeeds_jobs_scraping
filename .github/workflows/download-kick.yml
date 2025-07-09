@@ -1,36 +1,49 @@
-name: Download Kick Video
+name: Download and Commit Kick Video
 
 on:
-  workflow_dispatch:  # Allows manual triggering
+  workflow_dispatch:
+
+permissions:
+  contents: write  # ✅ Needed to push code changes to the repo
 
 jobs:
   download:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repo
         uses: actions/checkout@v3
-
-      - name: Create videos directory
-        run: mkdir -p videos
+        with:
+          persist-credentials: true  # ✅ Required for push
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Ensure videos folder exists
+        run: mkdir -p videos
+
       - name: Build Docker image
         run: docker build -t kick-video-downloader .
 
-      - name: Run container to download video
+      - name: Run container to download video into repo folder
         run: |
           docker run --rm \
             -v ${{ github.workspace }}/videos:/app/videos \
             kick-video-downloader
 
-      - name: List downloaded videos
+      - name: Show downloaded file
         run: ls -lh videos
 
-      - name: Upload downloaded video as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: kick-video
-          path: videos/
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Commit and push video to repo
+        run: |
+          if git status --porcelain | grep 'videos/'; then
+            git add videos/kick_video.mp4
+            git commit -m "Add downloaded Kick video"
+            git push
+          else
+            echo "⚠️ No changes to commit."

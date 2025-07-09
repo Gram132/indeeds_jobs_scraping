@@ -18,11 +18,18 @@ def download_with_ffmpeg(m3u8_url, save_path):
         print(f"📥 Downloading video with FFmpeg to {save_path} ...")
         cmd = [
             'ffmpeg',
+            '-y',
+            '-loglevel', 'error',
             '-i', m3u8_url,
-            '-c', 'copy',
-            '-bsf:a', 'aac_adtstoasc',
+            '-c:v', 'libx264',
+            '-preset', 'veryfast',
+            '-crf', '28',
+            '-c:a', 'aac',
+            '-b:a', '128k',
+            '-movflags', '+faststart',
             save_path
-        ]
+            ]
+
         process = subprocess.run(
             cmd,
             stdout=subprocess.PIPE,

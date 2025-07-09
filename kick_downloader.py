@@ -93,7 +93,7 @@ def download_kick_video(video_url, save_path):
                 logging.warning(f"Driver quit error: {e}")
 
 if __name__ == "__main__":
-    video_url = "https://kick.com/chaos333gg/clips/clip_01J97PAS46AE7DZD6HZSJATE66"
+    video_url = "https://kick.com/mahamawda/videos/0fbdf1c6-ec4e-412d-bcfe-cbf31bec0b5e"
     save_path = os.path.abspath("./videos/kick_video.mp4")
 
     success = download_kick_video(video_url, save_path)

@@ -84,80 +84,45 @@ def find_m3u8_in_source(page_source):
     return matches[0] if matches else None
 
 def download_kick_video(video_url, save_path, cookies_file=None):
-    """
-    Download a Kick video using undetected-chromedriver and FFmpeg.
-    
-    Args:
-        video_url (str): The Kick video URL (e.g., https://kick.com/chaos333gg/clips/clip_01J97PAS46AE7DZD6HZSJATE66).
-        save_path (str): Local path to save the video (e.g., './videos/kick_video.mp4').
-        cookies_file (str): Path to Netscape-format cookies.txt file (optional).
-    
-    Returns:
-        bool: True if download is successful, False otherwise.
-    """
-    logging.info(f"Starting download for {video_url}")
-    print(f"Starting download for {video_url}")
-    
+    logging.info(f"Starting download: {video_url}")
     driver = None
     try:
-        # Set up undetected-chromedriver
         options = uc.ChromeOptions()
         options.add_argument('--headless')
         options.add_argument('--disable-gpu')
         options.add_argument('--no-sandbox')
         options.add_argument('--window-size=1920,1080')
-        options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36')
-        
-        driver = uc.Chrome(options=options, use_subprocess=True)
-        
-        # Load cookies if provided
+
+        driver = uc.Chrome(options=options)
+
+        # ✅ Only try to load cookies if the file exists
         if cookies_file and os.path.exists(cookies_file):
-            if load_cookies(driver, cookies_file):
-                logging.info("Cookies loaded, navigating to video URL")
-                print("Cookies loaded, navigating to video URL")
-        
-        # Navigate to the video page
-        logging.info(f"Navigating to {video_url}")
-        print(f"Navigating to {video_url}")
+            logging.info("Cookies file found, loading cookies...")
+            load_cookies(driver, cookies_file)
+        else:
+            logging.info("No cookies file found. Continuing without cookies.")
+
         driver.get(video_url)
-        
-        # Wait for page to load
-        time.sleep(10)  # Increased wait for JavaScript and player
+        time.sleep(10)
         page_source = driver.page_source
-        
-        # Search for M3U8 URL
+
         m3u8_url = find_m3u8_in_source(page_source)
         if m3u8_url:
-            logging.info(f"Found M3U8 URL: {m3u8_url}")
-            print(f"Found M3U8 URL: {m3u8_url}")
+            logging.info(f"Found m3u8: {m3u8_url}")
             return download_with_ffmpeg(m3u8_url, save_path)
-        
-        logging.warning("No M3U8 URL found in page source")
-        print("No M3U8 URL found in page source")
-        print("Falling back to manual method. Follow these steps:")
-        print("1. Open Chrome, go to the video URL.")
-        print("2. Press F12 → Network → Media → Filter by 'm3u8'.")
-        print("3. Copy the M3U8 URL.")
-        print("4. Run: ffmpeg -i \"your_m3u8_url\" -c copy kick_video.mp4")
-        return False
-    
+        else:
+            logging.warning("No m3u8 URL found.")
+            return False
+
     except Exception as e:
         logging.error(f"Error: {e}")
-        print(f"Error: {e}")
-        print("Falling back to manual method. Follow these steps:")
-        print("1. Open Chrome, go to the video URL.")
-        print("2. Press F12 → Network → Media → Filter by 'm3u8'.")
-        print("3. Copy the M3U8 URL.")
-        print("4. Run: ffmpeg -i \"your_m3u8_url\" -c copy kick_video.mp4")
         return False
-    
     finally:
         if driver:
             try:
                 driver.quit()
             except Exception as e:
-                logging.error(f"Error quitting driver: {e}")
-                print(f"Error quitting driver: {e}")
+                logging.error(f"Driver quit error: {e}")
 
 # Example usage
 if __name__ == "__main__":

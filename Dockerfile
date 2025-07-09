@@ -15,6 +15,5 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY kick_downloader.py .
-COPY cookies.txt .  # Optional
 
 CMD ["python", "kick_downloader.py"]

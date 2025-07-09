@@ -1,5 +1,4 @@
 undetected-chromedriver>=3.5.5
-FFmpeg
 ffmpeg-python
 requests
 pymongo

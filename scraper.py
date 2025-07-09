@@ -61,8 +61,7 @@ def download_with_ffmpeg(m3u8_url, save_path):
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            text=True,
-            creationflags=subprocess.CREATE_NO_WINDOW  # Avoid Windows console popups
+            text=True
         )
         if process.returncode == 0:
             logging.info(f"Video downloaded successfully to {save_path}")
@@ -106,7 +105,7 @@ def download_kick_video(video_url, save_path, cookies_file=None):
         options.add_argument('--disable-gpu')
         options.add_argument('--no-sandbox')
         options.add_argument('--window-size=1920,1080')
-        options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36')
+        options.add_argument('--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36')
         
         driver = uc.Chrome(options=options, use_subprocess=True)
         
@@ -159,9 +158,8 @@ def download_kick_video(video_url, save_path, cookies_file=None):
                 logging.error(f"Error quitting driver: {e}")
                 print(f"Error quitting driver: {e}")
 
-# Example usage
 if __name__ == "__main__":
-    kick_url = "https://kick.com/chaos333gg/clips/clip_01J97PAS46AE7DZD6HZSJATE66"
-    save_path = "./videos/kick_video.mp4"
-    cookies_file = "cookies.txt"  # Optional: Path to cookies.txt
-    download_kick_video(kick_url, save_path, cookies_file)
+    video_url = os.getenv("VIDEO_URL", "https://kick.com/chaos333gg/clips/clip_01J97PAS46AE7DZD6HZSJATE66")
+    save_path = os.getenv("SAVE_PATH", "./videos/kick_video.mp4")
+    cookies_file = os.getenv("COOKIES_FILE", "cookies.txt")
+    download_kick_video(video_url, save_path, cookies_file)

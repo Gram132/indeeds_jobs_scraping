@@ -1,0 +1,5 @@
+# Netscape HTTP Cookie File
+# This is a dummy cookie file for testing purposes
+
+.kick.com	TRUE	/	FALSE	1893456000	session_id	dummy_session_value
+.kick.com	TRUE	/	FALSE	1893456000	auth_token	dummy_auth_token

@@ -14,7 +14,7 @@ def extract_m3u8_url(kick_url):
 
     try:
         driver.get(kick_url)
-        time.sleep(10)
+        time.sleep(20)
         page_source = driver.page_source
         m3u8_match = re.search(r'(https:\/\/[^\s"]+\.m3u8)', page_source)
         return m3u8_match.group(1) if m3u8_match else None

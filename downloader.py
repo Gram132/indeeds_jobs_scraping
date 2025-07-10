@@ -3,6 +3,9 @@ import time
 import re
 import subprocess
 import undetected_chromedriver as uc
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 def extract_m3u8_url(kick_url):
     print(f"🌐 Opening Kick video: {kick_url}")
@@ -14,7 +17,15 @@ def extract_m3u8_url(kick_url):
 
     try:
         driver.get(kick_url)
-        time.sleep(20)
+        try:
+            # Wait up to 20 seconds for <video> tag to load
+            WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.TAG_NAME, 'video'))
+            )
+            print("✅ Video element loaded.")
+        except Exception:
+            print("⚠️ Warning: Video element did not load in 20 seconds.")
+
         page_source = driver.page_source
         m3u8_match = re.search(r'(https:\/\/[^\s"]+\.m3u8)', page_source)
         return m3u8_match.group(1) if m3u8_match else None

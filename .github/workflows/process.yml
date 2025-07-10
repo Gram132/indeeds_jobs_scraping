@@ -34,7 +34,7 @@ jobs:
           python downloader.py
 
       - name: Upload videos
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: kick_videos
           path: videos/

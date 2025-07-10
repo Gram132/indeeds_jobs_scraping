@@ -1,0 +1,36 @@
+name: Kick Video Splitter
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  download-and-split:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install undetected-chromedriver
+
+      - name: Install ffmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Run kick downloader
+        run: python downloader.py
+
+      - name: Upload video parts as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: kick-video-parts
+          path: videos/

@@ -20,17 +20,14 @@ def download_with_ytdlp(video_url, save_path, cookies_file=None):
         '-o', save_path,
         '--no-progress',
         '--newline',
-        '--quiet'
+        '--quiet',
+        '--compat-options', 'yt-dlp-compat',
+        '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+        '--add-header', 'Referer: https://kick.com/',
     ]
 
     if cookies_file:
         cmd.extend(['--cookies', cookies_file])
-
-    # Add headers to help bypass some restrictions
-    cmd.extend([
-        '--add-header', 'Referer:https://kick.com/',
-        '--add-header', 'User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
-    ])
 
     try:
         result = subprocess.run(cmd, capture_output=True, text=True)

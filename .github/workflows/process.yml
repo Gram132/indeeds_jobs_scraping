@@ -30,7 +30,7 @@ jobs:
         run: python downloader.py
 
       - name: Upload video parts as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: kick-video-parts
           path: videos/

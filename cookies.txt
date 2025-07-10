@@ -1,0 +1,16 @@
+# Netscape HTTP Cookie File
+.kick.com	TRUE	/	TRUE	1752164637	__cf_bm	hLlqhOdfXBBgY4jm2A39rC3zIvqyd2o.xGmUmuDTE8E-1752162839-1.0.1.1-QIeAmLhkH4484KW5KujZz0APlQ02l2G1M5VUQjikBHIZz77N8sOfe0dVUVZrSaDgPRK.3iecjkyD2KoeoDXfXBOOQv_v4_5hH96rHfQ6C9c
+.kick.com	TRUE	/	TRUE	1783699063	__stripe_mid	2d2abe86-392d-4ffb-bd0e-4de614ff7c858c6e2f
+.kick.com	TRUE	/	TRUE	1752164863	__stripe_sid	ca8a60fe-15e3-449e-be21-b83bdd8d3dbd1547cd
+.kick.com	TRUE	/	TRUE	0	_cfuvid	G9T3oMxWci4a1v5HabtC3r7c3VSjwXY_PtxXd1xZsWA-1752157818681-0.0.1.1-604800000
+.kick.com	TRUE	/	FALSE	1786662615	_ga	GA1.1.1930000139.1737572070
+.kick.com	TRUE	/	FALSE	1786723061	_ga_YS2DLSGQ53	GS2.1.s1752163054$o67$g1$t1752163061$j56$l0$h895899819
+.kick.com	TRUE	/	FALSE	1753146392	_gcl_au	1.1.400051983.1745370392
+.kick.com	TRUE	/	TRUE	1783699056	cookie_preferences_set_v1	%7B%22state%22%3A%7B%22preferences%22%3A%7B%22necessary%22%3Atrue%2C%22functional%22%3Atrue%2C%22performance%22%3Atrue%2C%22targeting%22%3Atrue%2C%22userHasMadeChoice%22%3Atrue%7D%2C%22functionalEnabled%22%3Atrue%2C%22performanceEnabled%22%3Atrue%2C%22targetingEnabled%22%3Atrue%7D%2C%22version%22%3A0%7D
+.kick.com	TRUE	/	FALSE	1773199574	session_token	195342969%7CduMyTEJmxNIzMl7Fn4ormI5oOGYkR5RyD0qwVI45
+kick.com	FALSE	/	FALSE	1783699242	_dd_s	aid=e74fba8f-76e0-44d6-a5de-ea8edf8298f8&logs=1&id=99c3f692-d5b6-4713-a40a-aad8935fb631&created=1752161762249&expire=1752164137938&rum=0
+kick.com	FALSE	/	FALSE	1752249457	KP_UIDz	0IFZZvFIB5azIbgsRUzccHpqQPG24uqRAa6i3Y9UN5Fsg5pOG2M2rylYDTkJc4abtbeF02sVkXyApLc3TsgijvsURkhLPxavBbRuw5ys5pl5HsSJzl0QZsQvfpX6dcWdT6ZtHmhsmi1bPNp4QOkA9SRpxeCRuQvNpP4c1GOK
+kick.com	FALSE	/	TRUE	1752249457	KP_UIDz-ssn	0IFZZvFIB5azIbgsRUzccHpqQPG24uqRAa6i3Y9UN5Fsg5pOG2M2rylYDTkJc4abtbeF02sVkXyApLc3TsgijvsURkhLPxavBbRuw5ys5pl5HsSJzl0QZsQvfpX6dcWdT6ZtHmhsmi1bPNp4QOkA9SRpxeCRuQvNpP4c1GOK
+kick.com	FALSE	/	FALSE	1769192122	showMatureContent	true
+kick.com	FALSE	/	FALSE	1783595589	tile_player_muted	false
+kick.com	FALSE	/	FALSE	1783699001	volume	0

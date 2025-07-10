@@ -1,36 +1,40 @@
-name: Kick Video Splitter
+name: Kick Video Download
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
+    inputs:
+      video_urls:
+        description: 'Comma separated Kick video URLs'
+        required: false
 
 jobs:
-  download-and-split:
+  download:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install undetected-chromedriver
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg streamlink curl
+          pip install yt-dlp
 
-      - name: Install ffmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - name: Run downloader script
+        env:
+          COOKIES_FILE: cookies.txt
+        run: |
+          # Make sure cookies.txt is in the repo or added as secret artifact
+          python downloader.py
 
-      - name: Run kick downloader
-        run: python downloader.py
-
-      - name: Upload video parts as artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload videos
+        uses: actions/upload-artifact@v3
         with:
-          name: kick-video-parts
+          name: kick_videos
           path: videos/

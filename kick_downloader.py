@@ -110,11 +110,11 @@ if __name__ == "__main__":
     list_of_clips = [
         {
             'URL': 'https://kick.com/chaos333gg/clips/clip_01JZDJQS6MKYX9GS3XQAJK33RQ',
-            'name': 'video_001'
+            'name': 'video_004'
         },
         {
             'URL': 'https://kick.com/chaos333gg/clips/clip_01JZ9DD9C8FBA3PXT1JJQ6WDC9',
-            'name': 'video_002'
+            'name': 'video_003'
         },
     ]
 

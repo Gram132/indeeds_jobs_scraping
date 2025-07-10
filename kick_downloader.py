@@ -109,6 +109,10 @@ def download_kick_video(video_url, save_path):
 if __name__ == "__main__":
     list_of_clips = [
         {
+            'URL': 'https://kick.com/chaos333gg/videos/28252e5d-70c1-4fc2-afa5-cf0f34087065',
+            'name': 'video_003'
+        },
+        {
             'URL': 'https://kick.com/chaos333gg/clips/clip_01JZDJQS6MKYX9GS3XQAJK33RQ',
             'name': 'video_004'
         },

@@ -72,8 +72,8 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
 
 if __name__ == "__main__":
     m3u8_url = "https://stream.kick.com/ivs/v1/196233775518/IA8u3S766VUV/2025/7/8/0/18/6RbZCzVLI71j/media/hls/720p30/playlist.m3u8"
-    start_time = "00:01:00"
-    duration = "00:00:30"
+    start_time = "00:18:56"
+    duration = "01:30:00"
     logo_path = "./logo/logo.png"
 
     cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path)

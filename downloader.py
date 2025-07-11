@@ -1,78 +1,18 @@
 import subprocess
 import os
-import json
 from datetime import datetime
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaFileUpload
-
-SCOPES = ['https://www.googleapis.com/auth/drive.file']
-FOLDER_NAME = 'kick_streaming'
-
-
-def save_secret_to_file(secret_name, filename):
-    secret_content = os.environ.get(secret_name)
-    if not secret_content:
-        raise RuntimeError(f"❌ GitHub Secret `{secret_name}` is missing. Please set it in your repo settings.")
-    try:
-        json_data = json.loads(secret_content)
-    except json.JSONDecodeError as e:
-        raise RuntimeError(f"❌ Secret `{secret_name}` is not valid JSON: {e}")
-    with open(filename, "w") as f:
-        json.dump(json_data, f)
-
-
-def upload_to_drive(file_path, upload_name=None):
-    # Save secrets to file
-    save_secret_to_file('TOKEN_JSON', 'token.json')
-    save_secret_to_file('KICK_DOWNLOADER_TOKEN_JSON', 'kick_downloader_token.json')
-
-    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-
-    if not creds or not creds.valid:
-        flow = InstalledAppFlow.from_client_secrets_file('kick_downloader_token.json', SCOPES)
-        creds = flow.run_local_server(port=0)
-        with open('token.json', 'w') as token_file:
-            token_file.write(creds.to_json())
-
-    service = build('drive', 'v3', credentials=creds)
-
-    folder_id = None
-    query = f"name='{FOLDER_NAME}' and mimeType='application/vnd.google-apps.folder' and trashed=false"
-    response = service.files().list(q=query, spaces='drive', fields='files(id, name)').execute()
-    folders = response.get('files', [])
-
-    if folders:
-        folder_id = folders[0]['id']
-        print(f"📁 Found folder '{FOLDER_NAME}' with ID: {folder_id}")
-    else:
-        folder_metadata = {'name': FOLDER_NAME, 'mimeType': 'application/vnd.google-apps.folder'}
-        folder = service.files().create(body=folder_metadata, fields='id').execute()
-        folder_id = folder.get('id')
-        print(f"📁 Created folder '{FOLDER_NAME}' with ID: {folder_id}")
-
-    file_metadata = {
-        'name': upload_name or os.path.basename(file_path),
-        'parents': [folder_id]
-    }
-    media = MediaFileUpload(file_path, resumable=True)
-    uploaded_file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
-
-    print(f"✅ Uploaded to Google Drive with ID: {uploaded_file.get('id')}")
-
+from upload_to_drive import upload_to_drive
 
 def get_overlay_position(position):
     positions = {
-        'bottom_left': "10:H-h-10",
+        'bottom_left':  "10:H-h-10",
         'bottom_right': "W-w-10:H-h-10",
-        'top_left': "10:10",
-        'top_right': "W-w-10:10",
-        'bottom_center': "(W-w)/2:H-h-10",
-        'top_center': "(W-w)/2:10"
+        'top_left':     "10:10",
+        'top_right':    "W-w-10:10",
+        'bottom_center':"(W-w)/2:H-h-10",
+        'top_center':   "(W-w)/2:10"
     }
-    return positions.get(position, "W-w-10:H-h-10")
-
+    return positions.get(position, "W-w-10:H-h-10")  # default: bottom right
 
 def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo.png"):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -82,7 +22,7 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
     # Step 1: Cut from m3u8
     cut_cmd = [
         "ffmpeg",
-        "-user_agent", "Mozilla/5.0",
+        "-user_agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         "-referer", "https://kick.com/",
         "-ss", start_time,
         "-i", m3u8_url,
@@ -95,7 +35,7 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
     try:
         subprocess.run(cut_cmd, check=True)
     except subprocess.CalledProcessError:
-        print("❌ Failed to cut video.")
+        print("❌ Failed to cut video. Check FFmpeg or m3u8 link.")
         return
 
     # Step 2: Add watermark
@@ -113,11 +53,12 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
     print(f"🖼️ Adding logo to: {final_video}")
     try:
         subprocess.run(watermark_cmd, check=True)
+        print(f"✅ Final video ready: {final_video}")
     except subprocess.CalledProcessError:
         print("❌ Failed to apply watermark.")
         return
 
-    # Step 3: Upload to Google Drive
+    # Step 3: Upload to Drive
     try:
         upload_to_drive(final_video)
     except Exception as e:
@@ -129,10 +70,10 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
     os.remove(final_video)
     print("🧹 Cleaned up local files.")
 
-
 if __name__ == "__main__":
     m3u8_url = "https://stream.kick.com/ivs/v1/196233775518/IA8u3S766VUV/2025/7/8/0/18/6RbZCzVLI71j/media/hls/720p30/playlist.m3u8"
     start_time = "00:01:00"
     duration = "00:00:30"
     logo_path = "./logo/logo.png"
+
     cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path)

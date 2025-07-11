@@ -101,6 +101,7 @@ cut_and_watermark_kick_video(
     duration="00:02:00",
     logo_path="./logo/logo.png",
     streamer_name="Chaos333",
+    font_path = "./font/Merriweather_24pt-Regular.ttf"
 )
 
 

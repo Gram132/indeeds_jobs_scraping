@@ -1,35 +1,31 @@
-name: Kick Downloader and Upload to Drive
+name: Kick Clip Downloader
 
 on:
   workflow_dispatch:
 
 jobs:
-  run-kick-downloader:
+  run-script:
     runs-on: ubuntu-latest
+    env:
+      TOKEN_JSON: ${{ secrets.TOKEN_JSON }}
+      KICK_DOWNLOADER_TOKEN_JSON: ${{ secrets.KICK_DOWNLOADER_TOKEN_JSON }}
 
     steps:
-    - name: 📥 Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: 🔧 Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: 3.11
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-    - name: 🛠️ Install FFmpeg
-      run: |
-        sudo apt update
-        sudo apt install -y ffmpeg
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    - name: 📦 Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install google-auth google-auth-oauthlib google-api-python-client
+      - name: Install FFmpeg
+        run: sudo apt-get install -y ffmpeg
 
-    - name: 🔐 Create secrets from environment
-      run: |
-        echo "${{ secrets.KICK_DOWNLOADER_TOKEN_JSON }}" > kick_downloader_token.json
-        echo "${{ secrets.TOKEN_JSON }}" > token.json
-
-    - name: 🏃 Run script
-      run: python downloader.py
+      - name: Run Kick Downloader
+        run: python downloader.py

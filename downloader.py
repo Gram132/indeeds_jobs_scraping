@@ -2,7 +2,6 @@ import subprocess
 import os
 from datetime import datetime
 from upload_to_drive import upload_to_drive
-import time
 
 def get_overlay_position(position):
     positions = {
@@ -15,7 +14,7 @@ def get_overlay_position(position):
     }
     return positions.get(position, "W-w-10:H-h-10")  # default: bottom right
 
-def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo.png"):
+def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo.png", streamer_name="MoroccanStreamer123", font_path=""):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     raw_video = f"raw_kick_clip_{timestamp}.mp4"
     final_video = f"kick_clip_{timestamp}.mp4"
@@ -39,24 +38,46 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
         print("❌ Failed to cut video. Check FFmpeg or m3u8 link.")
         return
 
-    # Step 2: Add watermark
+    # Step 2: Add logo + scrolling text banner
     overlay_pos = get_overlay_position("top_left")
+
+    # Create the scrolling message
+    message = (
+        f"🎥 Clip by: {streamer_name} — Follow him on Kick.com and show some support! "
+        f"Let's grow the Moroccan streaming scene together! 🇲🇦💚"
+    )
+
+    # Format drawtext filter
+    drawtext = (
+        f"drawtext=text='{message}':"
+        f"fontcolor=green:fontsize=30:"
+        f"x=w-mod(t*100\\,w+text_w):y=h-th-20:"
+        f"box=1:boxcolor=red@1.0:boxborderw=10"
+    )
+
+    # Add font if specified
+    if font_path:
+        drawtext = f"drawtext=fontfile='{font_path}':" + drawtext[len("drawtext="):]
+
+    # FFmpeg filter chain: logo overlay + scrolling text
+    filter_complex = f"[1]scale=180:-1[logo];[0][logo]overlay={overlay_pos}, {drawtext}"
+
     watermark_cmd = [
         "ffmpeg",
         "-i", raw_video,
         "-i", logo_path,
-        "-filter_complex", f"[1]scale=180:-1[logo];[0][logo]overlay={overlay_pos}",
+        "-filter_complex", filter_complex,
         "-c:a", "copy",
         "-preset", "ultrafast",
         final_video
     ]
 
-    print(f"🖼️ Adding logo to: {final_video}")
+    print(f"🖼️ Adding logo and scrolling text to: {final_video}")
     try:
         subprocess.run(watermark_cmd, check=True)
         print(f"✅ Final video ready: {final_video}")
     except subprocess.CalledProcessError:
-        print("❌ Failed to apply watermark.")
+        print("❌ Failed to apply watermark and text.")
         return
 
     # Step 3: Upload to Drive
@@ -71,12 +92,30 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
     os.remove(final_video)
     print("🧹 Cleaned up local files.")
 
+
+
+cut_and_watermark_kick_video(
+    m3u8_url="https://stream.kick.com/ivs/v1/196233775518/IA8u3S766VUV/2025/7/4/19/31/zGqB0p1c0rTx/media/hls/720p30/playlist.m3u8",
+    start_time="00:01:00",
+    duration="00:02:00",
+    logo_path = "./logo/logo.png",
+    streamer_name="Chaos333",  # 👈 Your streamer's username
+)
+
+
+
+
+
+
+
+"""
 if __name__ == "__main__":
     m3u8_url_list =[
         {
             "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/wsB6eI5iA6yn/2025/7/7/17/27/ABvqDhn376cm/media/hls/1080p60/playlist.m3u8",
             "start":"00:15:50",
             "duration":"01:41:00"
+            
         },
         {
             "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/eoPm4ekt0lqJ/2025/6/30/22/35/Rey5tRgFCnpk/media/hls/1080p60/playlist.m3u8",
@@ -101,3 +140,5 @@ if __name__ == "__main__":
         
         cut_and_watermark_kick_video(m3u8['m3u8_url'], start_time, duration, logo_path)
         time.sleep(120)
+
+"""

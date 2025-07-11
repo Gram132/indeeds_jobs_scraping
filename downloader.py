@@ -71,7 +71,7 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
     print("🧹 Cleaned up local files.")
 
 if __name__ == "__main__":
-    m3u8_url = "https://stream.kick.com/ivs/v1/196233775518/IA8u3S766VUV/2025/7/8/0/18/6RbZCzVLI71j/media/hls/720p30/playlist.m3u8"
+    m3u8_url = "https://stream.kick.com/ivs/v1/196233775518/eoPm4ekt0lqJ/2025/7/4/22/57/4r5PGCThzTxg/media/hls/1080p60/playlist.m3u8"
     start_time = "00:18:56"
     duration = "01:30:00"
     logo_path = "./logo/logo.png"

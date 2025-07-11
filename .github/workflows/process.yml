@@ -1,41 +1,30 @@
-name: Kick Video Download
+name: Kick Downloader and Upload to Drive
 
 on:
   workflow_dispatch:
-    inputs:
-      video_urls:
-        description: 'Comma separated Kick video URLs'
-        required: false
 
 jobs:
-  download:
+  run-kick-downloader:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11
+    - name: 🔧 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
 
-      - name: Install dependencies
-        run:
-          sudo apt-get install -y ffmpeg streamlink curl
-          pip install yt-dlp
-          pip install -U yt-dlp[webp,secret,crypto]
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install google-auth google-auth-oauthlib google-api-python-client
 
+    - name: 🔐 Create secrets from environment
+      run: |
+        echo "${{ secrets.KICK_DOWNLOADER_TOKEN_JSON }}" > kick_downloader_token.json
+        echo "${{ secrets.TOKEN_JSON }}" > token.json
 
-      - name: Run downloader script
-        env:
-          COOKIES_FILE: cookies.txt
-        run: |
-          # Make sure cookies.txt is in the repo or added as secret artifact
-          python downloader.py
-
-      - name: Upload videos
-        uses: actions/upload-artifact@v4
-        with:
-          name: kick_videos
-          path: videos/
+    - name: 🏃 Run script
+      run: python downloader.py

@@ -1,113 +1,79 @@
 import subprocess
 import os
-import logging
+from datetime import datetime
+from upload_to_drive import upload_to_drive  # ✅ Import the upload function
 
-logging.basicConfig(
-    filename='kick_download.log',
-    level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
-)
+def get_overlay_position(position):
+    positions = {
+        'bottom_left':  "10:H-h-10",
+        'bottom_right': "W-w-10:H-h-10",
+        'top_left':     "10:10",
+        'top_right':    "W-w-10:10",
+        'bottom_center':"(W-w)/2:H-h-10",
+        'top_center':   "(W-w)/2:10"
+    }
+    return positions.get(position, "W-w-10:H-h-10")  # default: bottom right
 
-def download_with_ytdlp(video_url, save_path, cookies_file=None):
-    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo.png"):
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    raw_video = f"raw_kick_clip_{timestamp}.mp4"
+    final_video = f"kick_clip_{timestamp}.mp4"
 
-    print(f"⬇️ Downloading: {video_url}")
-    logging.info(f"Downloading {video_url}")
-
-    cmd = [
-        'yt-dlp',
-        video_url,
-        '-o', save_path,
-        '--no-progress',
-        '--newline',
-        '--quiet',
-        '--compat-options', 'yt-dlp-compat',
-        '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
-        '--add-header', 'Referer: https://kick.com/',
+    # Step 1: Cut from m3u8
+    cut_cmd = [
+        "ffmpeg",
+        "-user_agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "-referer", "https://kick.com/",
+        "-ss", start_time,
+        "-i", m3u8_url,
+        "-t", duration,
+        "-c", "copy",
+        raw_video
     ]
 
-    if cookies_file:
-        cmd.extend(['--cookies', cookies_file])
-
+    print(f"🎬 Cutting clip to: {raw_video}")
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True)
-        if result.returncode == 0:
-            print(f"✅ Download complete: {save_path}")
-            logging.info(f"Download success: {save_path}")
-            return True
-        else:
-            print(f"❌ yt-dlp failed:\n{result.stderr}")
-            logging.error(f"yt-dlp error: {result.stderr}")
-            return False
-    except Exception as e:
-        print(f"❌ yt-dlp exception: {e}")
-        logging.error(f"yt-dlp exception: {e}")
-        return False
+        subprocess.run(cut_cmd, check=True)
+    except subprocess.CalledProcessError:
+        print("❌ Failed to cut video. Check FFmpeg or m3u8 link.")
+        return
 
-
-def download_with_streamlink(video_url, save_path, cookies_file=None):
-    os.makedirs(os.path.dirname(save_path), exist_ok=True)
-
-    print(f"⚡ Attempting streamlink fallback: {video_url}")
-    logging.info(f"Streamlink fallback for {video_url}")
-
-    # Streamlink requires cookies in Netscape format, make sure your cookies file is compatible
-    cmd = [
-        'streamlink',
-        video_url,
-        'best',
-        '-o', save_path
+    # Step 2: Resize logo and overlay
+    overlay_pos = get_overlay_position("top_left")
+    watermark_cmd = [
+        "ffmpeg",
+        "-i", raw_video,
+        "-i", logo_path,
+        "-filter_complex", f"[1]scale=180:-1[logo];[0][logo]overlay={overlay_pos}",
+        "-c:a", "copy",
+        "-preset", "ultrafast",
+        final_video
     ]
 
-    # If you have cookies, you can pass them like --http-cookie "name=value" or from file
-    # streamlink does NOT support --cookies file like yt-dlp, so you may need to add headers if needed
-    # For now, let's assume no cookies for streamlink or add headers if you want
-
+    print(f"🖼️ Adding logo to: {final_video}")
     try:
-        result = subprocess.run(cmd, capture_output=True, text=True)
-        if result.returncode == 0:
-            print(f"✅ Streamlink download complete: {save_path}")
-            logging.info(f"Streamlink download success: {save_path}")
-            return True
-        else:
-            print(f"❌ Streamlink failed:\n{result.stderr}")
-            logging.error(f"Streamlink error: {result.stderr}")
-            return False
+        subprocess.run(watermark_cmd, check=True)
+        print(f"✅ Final video ready: {final_video}")
+    except subprocess.CalledProcessError:
+        print("❌ Failed to apply watermark. Check your logo and video.")
+        return
+
+    # Step 3: Upload to Google Drive
+    try:
+        upload_to_drive(final_video)
     except Exception as e:
-        print(f"❌ Streamlink exception: {e}")
-        logging.error(f"Streamlink exception: {e}")
-        return False
+        print(f"❌ Upload failed: {e}")
+        return
 
-
-def download_kick_video(video_url, save_path, cookies_file=None):
-    # First try yt-dlp
-    success = download_with_ytdlp(video_url, save_path, cookies_file)
-    if success:
-        return True
-
-    # If yt-dlp fails, fallback to streamlink
-    print("⚠️ yt-dlp failed, trying streamlink fallback...")
-    return download_with_streamlink(video_url, save_path, cookies_file)
-
+    # Step 4: Cleanup local files
+    os.remove(raw_video)
+    os.remove(final_video)
+    print("🧹 Cleaned up local files.")
 
 if __name__ == "__main__":
-    list_of_videos = [
-        {
-            'URL': 'https://kick.com/chaos333gg/clips/clip_01JZDJQS6MKYX9GS3XQAJK33RQ',
-            'name': 'clip_001'
-        },
-        {
-            'URL': 'https://kick.com/chaos333gg/videos/28252e5d-70c1-4fc2-afa5-cf0f34087065',
-            'name': 'long_video_001'
-        },
-    ]
+    m3u8_url = "https://stream.kick.com/ivs/v1/196233775518/IA8u3S766VUV/2025/7/8/0/18/6RbZCzVLI71j/media/hls/720p30/playlist.m3u8"
+    start_time = "00:01:00"
+    duration = "00:00:30"
+    logo_path = "./logo/logo.png"
 
-    cookies_file = 'cookies.txt'  # Your cookies file path in Netscape format
-
-    for video in list_of_videos:
-        url = video['URL']
-        out_path = f'./videos/{video["name"]}.mp4'
-        if not download_kick_video(url, out_path, cookies_file=cookies_file):
-            print(f"❌ Failed to download: {url}")
-        else:
-            print(f"✅ Successfully downloaded: {out_path}")
+    cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path)

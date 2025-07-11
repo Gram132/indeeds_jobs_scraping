@@ -14,6 +14,10 @@ def get_overlay_position(position):
     }
     return positions.get(position, "W-w-10:H-h-10")  # default: bottom right
 
+def escape_text_for_drawtext(text):
+    # FFmpeg needs certain characters escaped: ':' and '\''
+    return text.replace(":", r'\:').replace("'", r"\\'")
+
 def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo.png", streamer_name="MoroccanStreamer123", font_path=""):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     raw_video = f"raw_kick_clip_{timestamp}.mp4"
@@ -38,32 +42,31 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
         print("❌ Failed to cut video. Check FFmpeg or m3u8 link.")
         return
 
-    # Step 2: Add logo + seamless scrolling text banner
+    # Step 2: Add logo + scrolling text
     overlay_pos = get_overlay_position("top_left")
 
-    # Create the scrolling message repeated twice for seamless loop
     base_message = (
         f"Clip by: {streamer_name} — Follow him on Kick.com and show some support! "
         f"Catch all the latest highlights, epic gameplay moments, and live reactions. "
         f"Join the community, drop a follow, and help grow the Moroccan streaming scene! "
         f"Don't miss out on exclusive content and giveaways. Stay tuned for more!"
-)
-    repeat_message = base_message + "    " + base_message  # spaces between repeats
+    )
 
-    # Format drawtext filter for seamless scrolling (scrolls over twice the text width)
-    drawtext = (
-        f"drawtext=text='{repeat_message}':"
+    # Repeat for seamless scrolling
+    repeat_message = base_message + "    " + base_message
+    safe_text = escape_text_for_drawtext(repeat_message)
+
+    # Build drawtext filter
+    drawtext_filter = (
+        f"drawtext="
+        f"{'fontfile=' + font_path + ':' if font_path else ''}"
+        f"text='{safe_text}':"
         f"fontcolor=#53fc18:fontsize=30:"
         f"x=w-mod(t*100\\,text_w*2):y=h-th-20:"
         f"box=1:boxcolor=#b31015@1.0:boxborderw=10"
     )
 
-    # Add font if specified
-    if font_path:
-        drawtext = f"drawtext=fontfile='{font_path}':" + drawtext[len("drawtext="):]
-
-    # FFmpeg filter chain: logo overlay + scrolling text
-    filter_complex = f"[1]scale=180:-1[logo];[0][logo]overlay={overlay_pos}, {drawtext}"
+    filter_complex = f"[1]scale=180:-1[logo];[0][logo]overlay={overlay_pos}, {drawtext_filter}"
 
     watermark_cmd = [
         "ffmpeg",
@@ -75,7 +78,7 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
         final_video
     ]
 
-    print(f"🖼️ Adding logo and seamless scrolling text to: {final_video}")
+    print(f"🖼️ Adding logo and scrolling text to: {final_video}")
     try:
         subprocess.run(watermark_cmd, check=True)
         print(f"✅ Final video ready: {final_video}")
@@ -96,18 +99,15 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
     print("🧹 Cleaned up local files.")
 
 
-
+# 🧪 Run
 cut_and_watermark_kick_video(
     m3u8_url="https://stream.kick.com/ivs/v1/196233775518/IA8u3S766VUV/2025/7/4/19/31/zGqB0p1c0rTx/media/hls/720p30/playlist.m3u8",
     start_time="00:01:00",
     duration="00:02:00",
     logo_path="./logo/logo.png",
     streamer_name="Chaos333",
-    font_path = "./font/Merriweather_24pt-Regular.ttf"
+    font_path="./font/Merriweather_24pt-Regular.ttf"
 )
-
-
-
 
 
 

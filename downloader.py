@@ -46,7 +46,7 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
 
     base_message = (
         f"Clip by: {streamer_name} - Follow him on Kick.com and show some support! "
-        f"Catch amazing gameplay, reactions, and giveaways! "
+        f"Catch amazing gameplay, reactions, and stories! "
         f"Support the Moroccan streaming scene! "
     )
     repeat_message = base_message + "     " + base_message
@@ -108,20 +108,13 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
     print("🧹 Cleaned up local files.")
 
 
-# 🧪 Run the script
-cut_and_watermark_kick_video(
-    m3u8_url="https://stream.kick.com/ivs/v1/196233775518/IA8u3S766VUV/2025/7/4/19/31/zGqB0p1c0rTx/media/hls/720p30/playlist.m3u8",
-    start_time="00:01:00",
-    duration="00:02:00",
-    logo_path="./logo/logo.png",
-    streamer_name="Chaos333",
-    font_path="./font/Merriweather.ttf"  # Make sure this path and file are correct
-)
 
 
 
-"""
+
+
 if __name__ == "__main__":
+    
     m3u8_url_list =[
         {
             "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/wsB6eI5iA6yn/2025/7/7/17/27/ABvqDhn376cm/media/hls/1080p60/playlist.m3u8",
@@ -132,30 +125,38 @@ if __name__ == "__main__":
         {
             "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/eoPm4ekt0lqJ/2025/6/30/22/35/Rey5tRgFCnpk/media/hls/1080p60/playlist.m3u8",
             "start":"01:12:00",
-            "duration":"01:12:00"
-            "Streamer":"Morebilal"
+            "duration":"01:12:00",
+            "Streamer":"Morebilal",
         },
         {
             "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/HaIvcroXy7Rb/2025/6/30/22/1/anAKNmqO2s8I/media/hls/1080p/playlist.m3u8",
             "start":"01:47:47",
-            "duration":"01:44:00"
-            "Streamer":"Mahamawda"
+            "duration":"01:44:00",
+            "Streamer":"Mahamawda",
 
         },
         {
             "m3u8_url":"",
             "start":"03:07:40",
-            "duration":"00:56:20"
-            "Streamer":"Bougassaa"
+            "duration":"00:56:20",
+            "Streamer":"Bougassaa",
 
         },
     ]
+
     for m3u8 in m3u8_url_list :
+        m3u8Url= m3u8['m3u8_url']
         start_time = m3u8['start']
         duration = m3u8['duration']
         logo_path = "./logo/logo.png"
+        streamer = m3u8['Streamer']
         
-        cut_and_watermark_kick_video(m3u8['m3u8_url'], start_time, duration, logo_path)
-        time.sleep(120)
-
-"""
+        # 🧪 Run the script
+        cut_and_watermark_kick_video(
+            m3u8_url=m3u8Url,
+            start_time=start_time ,
+            duration=duration ,
+            logo_path=logo_path ,
+            streamer_name=streamer,
+            font_path="./font/Merriweather.ttf"  # Make sure this path and file are correct
+        )

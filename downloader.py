@@ -43,17 +43,19 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
 
     # Create the scrolling message repeated twice for seamless loop
     base_message = (
-        f"🎥 Clip by: {streamer_name} — Follow him on Kick.com and show some support! "
-        f"Let's grow the Moroccan streaming scene together! 🇲🇦💚"
-    )
+        f"Clip by: {streamer_name} — Follow him on Kick.com and show some support! "
+        f"Catch all the latest highlights, epic gameplay moments, and live reactions. "
+        f"Join the community, drop a follow, and help grow the Moroccan streaming scene! "
+        f"Don't miss out on exclusive content and giveaways. Stay tuned for more!"
+)
     repeat_message = base_message + "    " + base_message  # spaces between repeats
 
     # Format drawtext filter for seamless scrolling (scrolls over twice the text width)
     drawtext = (
         f"drawtext=text='{repeat_message}':"
-        f"fontcolor=green:fontsize=30:"
+        f"fontcolor=#53fc18:fontsize=30:"
         f"x=w-mod(t*100\\,text_w*2):y=h-th-20:"
-        f"box=1:boxcolor=red@1.0:boxborderw=10"
+        f"box=1:boxcolor=#b31015@1.0:boxborderw=10"
     )
 
     # Add font if specified

@@ -2,6 +2,7 @@ import subprocess
 import os
 from datetime import datetime
 from upload_to_drive import upload_to_drive
+import time
 
 def get_overlay_position(position):
     positions = {
@@ -71,9 +72,32 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
     print("🧹 Cleaned up local files.")
 
 if __name__ == "__main__":
-    m3u8_url = "https://stream.kick.com/ivs/v1/196233775518/eoPm4ekt0lqJ/2025/7/4/22/57/4r5PGCThzTxg/media/hls/1080p60/playlist.m3u8"
-    start_time = "00:18:56"
-    duration = "01:30:00"
-    logo_path = "./logo/logo.png"
-
-    cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path)
+    m3u8_url_list =[
+        {
+            "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/wsB6eI5iA6yn/2025/7/7/17/27/ABvqDhn376cm/media/hls/1080p60/playlist.m3u8",
+            "start":"00:15:50",
+            "duration":"01:41:00"
+        },
+        {
+            "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/eoPm4ekt0lqJ/2025/6/30/22/35/Rey5tRgFCnpk/media/hls/1080p60/playlist.m3u8",
+            "start":"01:12:00",
+            "duration":"01:12:00"
+        },
+        {
+            "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/HaIvcroXy7Rb/2025/6/30/22/1/anAKNmqO2s8I/media/hls/1080p/playlist.m3u8",
+            "start":"01:47:47",
+            "duration":"01:44:00"
+        },
+        {
+            "m3u8_url":"",
+            "start":"03:07:40",
+            "duration":"00:56:20"
+        },
+    ]
+    for m3u8 in m3u8_url_list :
+        start_time = m3u8['start']
+        duration = m3u8['duration']
+        logo_path = "./logo/logo.png"
+        
+        cut_and_watermark_kick_video(m3u8['m3u8_url'], start_time, duration, logo_path)
+        time.sleep(120)

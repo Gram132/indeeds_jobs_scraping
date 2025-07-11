@@ -38,20 +38,21 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
         print("❌ Failed to cut video. Check FFmpeg or m3u8 link.")
         return
 
-    # Step 2: Add logo + scrolling text banner
+    # Step 2: Add logo + seamless scrolling text banner
     overlay_pos = get_overlay_position("top_left")
 
-    # Create the scrolling message
-    message = (
+    # Create the scrolling message repeated twice for seamless loop
+    base_message = (
         f"🎥 Clip by: {streamer_name} — Follow him on Kick.com and show some support! "
         f"Let's grow the Moroccan streaming scene together! 🇲🇦💚"
     )
+    repeat_message = base_message + "    " + base_message  # spaces between repeats
 
-    # Format drawtext filter
+    # Format drawtext filter for seamless scrolling (scrolls over twice the text width)
     drawtext = (
-        f"drawtext=text='{message}':"
+        f"drawtext=text='{repeat_message}':"
         f"fontcolor=green:fontsize=30:"
-        f"x=w-mod(t*100\\,w+text_w):y=h-th-20:"
+        f"x=w-mod(t*100\\,text_w*2):y=h-th-20:"
         f"box=1:boxcolor=red@1.0:boxborderw=10"
     )
 
@@ -72,7 +73,7 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
         final_video
     ]
 
-    print(f"🖼️ Adding logo and scrolling text to: {final_video}")
+    print(f"🖼️ Adding logo and seamless scrolling text to: {final_video}")
     try:
         subprocess.run(watermark_cmd, check=True)
         print(f"✅ Final video ready: {final_video}")
@@ -98,10 +99,9 @@ cut_and_watermark_kick_video(
     m3u8_url="https://stream.kick.com/ivs/v1/196233775518/IA8u3S766VUV/2025/7/4/19/31/zGqB0p1c0rTx/media/hls/720p30/playlist.m3u8",
     start_time="00:01:00",
     duration="00:02:00",
-    logo_path = "./logo/logo.png",
-    streamer_name="Chaos333",  # 👈 Your streamer's username
+    logo_path="./logo/logo.png",
+    streamer_name="Chaos333",
 )
-
 
 
 

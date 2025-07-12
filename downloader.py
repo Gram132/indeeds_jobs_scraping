@@ -124,7 +124,7 @@ if __name__ == "__main__":
 
         },
         {
-            "m3u8_url":"",
+            "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/I292QO1u997N/2025/7/8/22/12/S38k2IWZzc3Y/media/hls/1080p60/playlist.m3u8",
             "start":"03:07:40",
             "duration":"00:56:20",
             "Streamer":"Bougassaa",

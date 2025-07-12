@@ -117,18 +117,6 @@ if __name__ == "__main__":
     
     m3u8_url_list =[
         {
-            "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/wsB6eI5iA6yn/2025/7/7/17/27/ABvqDhn376cm/media/hls/1080p60/playlist.m3u8",
-            "start":"00:15:50",
-            "duration":"01:41:00",
-            "Streamer":" Lkhoud3a"            
-        },
-        {
-            "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/eoPm4ekt0lqJ/2025/6/30/22/35/Rey5tRgFCnpk/media/hls/1080p60/playlist.m3u8",
-            "start":"01:12:00",
-            "duration":"01:12:00",
-            "Streamer":"Morebilal",
-        },
-        {
             "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/HaIvcroXy7Rb/2025/6/30/22/1/anAKNmqO2s8I/media/hls/1080p/playlist.m3u8",
             "start":"01:47:47",
             "duration":"01:44:00",

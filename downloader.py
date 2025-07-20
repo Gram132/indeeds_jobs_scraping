@@ -117,17 +117,17 @@ if __name__ == "__main__":
     
     m3u8_url_list =[
         {
-            "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/HaIvcroXy7Rb/2025/6/30/22/1/anAKNmqO2s8I/media/hls/1080p/playlist.m3u8",
-            "start":"01:47:47",
-            "duration":"01:44:00",
-            "Streamer":"Mahamawda",
+            "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/9OyzMUlECMLH/2025/7/18/20/38/ih5HRKQ7r24C/media/hls/1080p60/playlist.m3u8",
+            "start":"02:04:31",
+            "duration":"01:10:36",
+            "Streamer":"TheRealPatty",
 
         },
         {
-            "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/I292QO1u997N/2025/7/8/22/12/S38k2IWZzc3Y/media/hls/1080p60/playlist.m3u8",
-            "start":"03:07:40",
-            "duration":"00:56:20",
-            "Streamer":"Bougassaa",
+            "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/HaIvcroXy7Rb/2025/7/16/21/42/w4WPiYKTVqh2/media/hls/1080p/playlist.m3u8",
+            "start":"00:35:30",
+            "duration":"02:57:30",
+            "Streamer":"Mahamawda",
 
         },
     ]

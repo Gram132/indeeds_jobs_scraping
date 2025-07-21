@@ -1,0 +1,128 @@
+[
+  {
+    "name": "__cf_bm",
+    "value": "RYGtjCK879rI0XDiNUmP2UdtrVUoBtH9sfxtWbRGc4o-1752166660-1.0.1.1-_r18.drT6vbk2B.42jcf4JrQiggpD8WQ0rSTJFaWhq3NOMXzcNvrekJ.Yx3gmEbTeGk7roOIqe1flcx48KLZdGciG5GcU1ByQfAGQQLc8_Y",
+    "domain": ".kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "__stripe_mid",
+    "value": "2d2abe86-392d-4ffb-bd0e-4de614ff7c858c6e2f",
+    "domain": ".kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_cfuvid",
+    "value": "G9T3oMxWci4a1v5HabtC3r7c3VSjwXY_PtxXd1xZsWA-1752157818681-0.0.1.1-604800000",
+    "domain": ".kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_ga",
+    "value": "GA1.1.1930000139.1737572070",
+    "domain": ".kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_ga_YS2DLSGQ53",
+    "value": "GS2.1.s1752163054$o67$g1$t1752164664$j45$l0$h895899819",
+    "domain": ".kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_gcl_au",
+    "value": "1.1.400051983.1745370392",
+    "domain": ".kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "cookie_preferences_set_v1",
+    "value": "%7B%22state%22%3A%7B%22preferences%22%3A%7B%22necessary%22%3Atrue%2C%22functional%22%3Atrue%2C%22performance%22%3Atrue%2C%22targeting%22%3Atrue%2C%22userHasMadeChoice%22%3Atrue%7D%2C%22functionalEnabled%22%3Atrue%2C%22performanceEnabled%22%3Atrue%2C%22targetingEnabled%22%3Atrue%7D%2C%22version%22%3A0%7D",
+    "domain": ".kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "session_token",
+    "value": "195342969%7CduMyTEJmxNIzMl7Fn4ormI5oOGYkR5RyD0qwVI45",
+    "domain": ".kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_dd_s",
+    "value": "isExpired=1&aid=e74fba8f-76e0-44d6-a5de-ea8edf8298f8",
+    "domain": "kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "KP_UIDz",
+    "value": "0IFZZvFIB5azIbgsRUzccHpqQPG24uqRAa6i3Y9UN5Fsg5pOG2M2rylYDTkJc4abtbeF02sVkXyApLc3TsgijvsURkhLPxavBbRuw5ys5pl5HsSJzl0QZsQvfpX6dcWdT6ZtHmhsmi1bPNp4QOkA9SRpxeCRuQvNpP4c1GOK",
+    "domain": "kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "KP_UIDz-ssn",
+    "value": "0IFZZvFIB5azIbgsRUzccHpqQPG24uqRAa6i3Y9UN5Fsg5pOG2M2rylYDTkJc4abtbeF02sVkXyApLc3TsgijvsURkhLPxavBbRuw5ys5pl5HsSJzl0QZsQvfpX6dcWdT6ZtHmhsmi1bPNp4QOkA9SRpxeCRuQvNpP4c1GOK",
+    "domain": "kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "showMatureContent",
+    "value": "true",
+    "domain": "kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "tile_player_muted",
+    "value": "false",
+    "domain": "kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "volume",
+    "value": "0",
+    "domain": "kick.com",
+    "path": "/",
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  }
+]

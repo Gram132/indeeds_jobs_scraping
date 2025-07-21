@@ -1,6 +1,6 @@
 import subprocess
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from upload_to_drive import upload_to_drive
 
 def get_overlay_position(position):
@@ -12,25 +12,40 @@ def get_overlay_position(position):
         'bottom_center':"(W-w)/2:H-h-10",
         'top_center':   "(W-w)/2:10"
     }
-    return positions.get(position, "W-w-10:H-h-10")  # default: bottom right
+    return positions.get(position, "W-w-10:H-h-10")
 
 def escape_text_for_drawtext(text):
     return text.replace(":", r'\:').replace("'", r"\\'")
 
-def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo.png", streamer_name="MoroccanStreamer123", font_path=""):
+def hms_to_seconds(hms):
+    h, m, s = map(int, hms.split(":"))
+    return h * 3600 + m * 60 + s
+
+def seconds_to_hms(seconds):
+    return str(timedelta(seconds=seconds))
+
+def cut_and_watermark_kick_video(m3u8_url, start_time, end_time, logo_path="logo.png", streamer_name="MoroccanStreamer123", font_path=""):
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     raw_video = f"raw_kick_clip_{timestamp}.mp4"
     final_video = f"kick_clip_{timestamp}.mp4"
 
-    # Step 1: Download clip from m3u8
+    # Calculate duration
+    start_seconds = hms_to_seconds(start_time)
+    end_seconds = hms_to_seconds(end_time)
+    duration_seconds = max(0, end_seconds - start_seconds)
+    duration = seconds_to_hms(duration_seconds)
+
+    # Step 1: Download and re-encode the clip
     cut_cmd = [
         "ffmpeg",
         "-user_agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
         "-referer", "https://kick.com/",
-        "-ss", start_time,
         "-i", m3u8_url,
+        "-ss", start_time,
         "-t", duration,
-        "-c", "copy",
+        "-c:v", "libx264",
+        "-c:a", "aac",
+        "-preset", "ultrafast",
         raw_video
     ]
 
@@ -41,7 +56,7 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
         print("❌ Failed to cut video. Check FFmpeg or m3u8 link.")
         return
 
-    # Step 2: Add watermark + scrolling text
+    # Step 2: Add watermark and scrolling text
     overlay_pos = get_overlay_position("top_left")
 
     base_message = (
@@ -72,7 +87,7 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
 
     watermark_cmd = [
         "ffmpeg",
-        "-y",  # Overwrite output if exists
+        "-y",
         "-i", raw_video,
         "-i", logo_path,
         "-filter_complex", filter_complex,
@@ -82,8 +97,6 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
     ]
 
     print(f"🖼️ Running FFmpeg to apply logo and scrolling text...")
-    print("🔧 Command preview:\n", " ".join(watermark_cmd))
-
     try:
         result = subprocess.run(watermark_cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         output = result.stdout.decode()
@@ -95,56 +108,44 @@ def cut_and_watermark_kick_video(m3u8_url, start_time, duration, logo_path="logo
         print(f"❌ FFmpeg exception: {e}")
         return
 
-    # Step 3: Upload to Drive
+    # Step 3: Upload to Google Drive
     try:
         upload_to_drive(final_video)
     except Exception as e:
         print(f"❌ Upload failed: {e}")
         return
 
-    # Step 4: Clean up
+    # Step 4: Clean up local files
     os.remove(raw_video)
     os.remove(final_video)
     print("🧹 Cleaned up local files.")
 
-
-
-
-
-
+# ============================
+# RUN
+# ============================
 
 if __name__ == "__main__":
-    
-    m3u8_url_list =[
+    m3u8_url_list = [
         {
-            "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/9OyzMUlECMLH/2025/7/18/20/38/ih5HRKQ7r24C/media/hls/1080p60/playlist.m3u8",
-            "start":"02:04:31",
-            "duration":"01:10:36",
-            "Streamer":"TheRealPatty",
-
+            "m3u8_url": "https://stream.kick.com/ivs/v1/196233775518/9OyzMUlECMLH/2025/7/18/20/38/ih5HRKQ7r24C/media/hls/1080p60/playlist.m3u8",
+            "start": "03:04:31",
+            "end": "04:15:07",
+            "Streamer": "TheRealPatty",
         },
         {
-            "m3u8_url":"https://stream.kick.com/ivs/v1/196233775518/HaIvcroXy7Rb/2025/7/16/21/42/w4WPiYKTVqh2/media/hls/1080p/playlist.m3u8",
-            "start":"00:35:30",
-            "duration":"02:57:30",
-            "Streamer":"Mahamawda",
-
+            "m3u8_url": "https://stream.kick.com/ivs/v1/196233775518/HaIvcroXy7Rb/2025/7/16/21/42/w4WPiYKTVqh2/media/hls/1080p/playlist.m3u8",
+            "start": "00:35:30",
+            "end": "03:33:00",
+            "Streamer": "Mahamawda",
         },
     ]
 
-    for m3u8 in m3u8_url_list :
-        m3u8Url= m3u8['m3u8_url']
-        start_time = m3u8['start']
-        duration = m3u8['duration']
-        logo_path = "./logo/logo.png"
-        streamer = m3u8['Streamer']
-        
-        # 🧪 Run the script
+    for m3u8 in m3u8_url_list:
         cut_and_watermark_kick_video(
-            m3u8_url=m3u8Url,
-            start_time=start_time ,
-            duration=duration ,
-            logo_path=logo_path ,
-            streamer_name=streamer,
-            font_path="./font/Merriweather.ttf"  # Make sure this path and file are correct
+            m3u8_url=m3u8['m3u8_url'],
+            start_time=m3u8['start'],
+            end_time=m3u8['end'],
+            logo_path="./logo/logo.png",
+            streamer_name=m3u8['Streamer'],
+            font_path="./font/Merriweather.ttf"
         )
